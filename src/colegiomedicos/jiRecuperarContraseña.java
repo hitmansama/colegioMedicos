@@ -115,7 +115,7 @@ public class jiRecuperarContraseña extends javax.swing.JInternalFrame {
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
        this.dispose();
-       
+       // sdfsd
     }//GEN-LAST:event_jbCancelarActionPerformed
 
 
