@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-sep-2018 10:11:13 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.Socio" table="socio" catalog="colegiomedicosdb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="codigo" type="string">
+            <column name="codigo" length="5" not-null="true" unique="true" />
+        </property>
+        <property name="apellidoPaterno" type="string">
+            <column name="apellidoPaterno" length="45" not-null="true" />
+        </property>
+        <property name="apellidoMaterno" type="string">
+            <column name="apellidoMaterno" length="45" not-null="true" />
+        </property>
+        <property name="nombres" type="string">
+            <column name="nombres" length="100" not-null="true" />
+        </property>
+        <property name="fechaNacimiento" type="date">
+            <column name="fechaNacimiento" length="10" not-null="true" />
+        </property>
+        <property name="ciudad" type="string">
+            <column name="ciudad" length="45" />
+        </property>
+        <property name="provincia" type="string">
+            <column name="provincia" length="45" />
+        </property>
+        <property name="pais" type="string">
+            <column name="pais" length="45" />
+        </property>
+        <property name="graduacionUni" type="string">
+            <column name="graduacionUni" length="150" not-null="true" />
+        </property>
+        <property name="inscripcionSanitaria" type="string">
+            <column name="inscripcionSanitaria" length="20" not-null="true" />
+        </property>
+        <property name="libro" type="string">
+            <column name="libro" length="45" />
+        </property>
+        <property name="folio" type="string">
+            <column name="folio" length="45" />
+        </property>
+        <property name="lugarGrad" type="string">
+            <column name="lugarGrad" length="15" not-null="true" />
+        </property>
+        <property name="fehaGrad" type="date">
+            <column name="fehaGrad" length="10" not-null="true" />
+        </property>
+        <property name="especialidad" type="string">
+            <column name="especialidad" length="100" />
+        </property>
+        <property name="universidadEsp" type="string">
+            <column name="universidadEsp" length="100" />
+        </property>
+        <property name="fechaEsp" type="date">
+            <column name="fechaEsp" length="10" />
+        </property>
+        <property name="medicaturaRural" type="string">
+            <column name="medicaturaRural" length="100" not-null="true" />
+        </property>
+        <property name="fechaRural" type="date">
+            <column name="fechaRural" length="10" not-null="true" />
+        </property>
+        <property name="estadoCivil" type="string">
+            <column name="estadoCivil" length="45" not-null="true" />
+        </property>
+        <property name="nombresConyuge" type="string">
+            <column name="nombresConyuge" length="130" />
+        </property>
+        <property name="lugarResidencia" type="string">
+            <column name="lugarResidencia" length="45" />
+        </property>
+        <property name="direccionResidencia" type="string">
+            <column name="direccionResidencia" length="100" />
+        </property>
+        <property name="telfResidencia" type="string">
+            <column name="telfResidencia" length="15" />
+        </property>
+        <property name="direccionConsultorio" type="string">
+            <column name="direccionConsultorio" length="120" />
+        </property>
+        <property name="telfConsultorio" type="string">
+            <column name="telfConsultorio" length="15" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" not-null="true" />
+        </property>
+        <property name="telfCelular" type="string">
+            <column name="telfCelular" length="15" not-null="true" />
+        </property>
+        <property name="cedula" type="string">
+            <column name="cedula" length="15" not-null="true" />
+        </property>
+        <property name="grupoSanguineo" type="string">
+            <column name="grupoSanguineo" length="4" not-null="true" />
+        </property>
+        <property name="fechaAfiliacion" type="date">
+            <column name="fechaAfiliacion" length="10" not-null="true" />
+        </property>
+        <property name="lugarAfiliacion" type="string">
+            <column name="lugarAfiliacion" length="45" not-null="true" />
+        </property>
+        <property name="fotoAsociado" type="binary">
+            <column name="fotoAsociado" />
+        </property>
+        <set name="auditoriacuentas" table="auditoriacuenta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="socio_id" />
+            </key>
+            <one-to-many class="pojos.Auditoriacuenta" />
+        </set>
+    </class>
+</hibernate-mapping>
