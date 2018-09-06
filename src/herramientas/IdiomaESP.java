@@ -35,14 +35,30 @@ public final class IdiomaESP {
     public final static String mErMiCuentaGuardar = "No se pudo actualizar la cuenta.";
     // venana Recuperar contraseña
     public final static String tRecuperarContrasena = "Recuperar contraseñas cuentas";
-   
+    public final static String btBuscar = "Buscar";
+    public final static String mNoPrivilegioCuenta = "La cuenta es administrador o súper administrador, no tiene privilegios para acceder a esta cuenta.";
+    public final static String tNoPrivilegioCuenta = "No se puede acceder a la cuenta.";
     //
-    public final static String tSupAdminCuenta = "Super administrador Cuentas";
+    public final static String tSupAdminCuenta = "administrador Cuentas";
+    public final static String mErEditarSinSele = "Debe seleccionar un objeto de la tabla";
     //TITULOS JOPTION
     public final static String jopInf = "Información";
     public final static String jopErr = "Error";
     public final static String jopWar = "Advertencia";
     public final static String jopQue = "Confirmación";
+    public final static String bNuevo = "Nuevo";
+    public final static String lNombres = "Nombres";
+    public final static String lApellidos = "Apellidos";
+    public final static String lTipoCuenta = "Tipo cuenta";
+    public final static String mTipoAdmin = "Administrador";
+    public final static String mTipoNormal = "Usuario";
+    public final static String btGuardar = "Guardar";
+    public final static String mGuardarUsuario = "Se guardó con éxito el nuevo usuario";
+    public final static String tGuardarUsuario = "Guardar usuario";
+    public final static String mErGuardarUsuario = "No se pudo guardar el nuevo usuario";
+    public final static String mErExisteUsuario  = "Ya existe un usuario ";
+    public final static String tEditarUsuario = "Editar usuario";
+    public final static String mErSinPrivilegios = "No cuenta con los privilegios de Súper Administrador para esta acción";
 
     //ERRORES
     public final static String mErMaxJInter = "Hubo un error al tratar de reestablecer la ventana";

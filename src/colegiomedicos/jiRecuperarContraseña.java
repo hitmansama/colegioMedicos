@@ -5,10 +5,13 @@
  */
 package colegiomedicos;
 
+import eventos.hCuenta;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import herramientas.IdiomaESP;
+import pojos.Cuenta;
+
 /**
  *
  * @author PC
@@ -18,13 +21,15 @@ public class jiRecuperarContraseña extends javax.swing.JInternalFrame {
     /**
      * Creates new form jiRecuperarContraseña
      */
+    private Cuenta cuenta;
+
     public jiRecuperarContraseña(String _titulo) {
         initComponents();
         this.setTitle(_titulo);
         this.setClosable(true);
         this.setIconifiable(true);
         this.setResizable(false);
-       
+
     }
 
     /**
@@ -37,18 +42,22 @@ public class jiRecuperarContraseña extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtxtCuenta = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jtxtContrasena = new javax.swing.JTextField();
         jbActualizar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jbCancelar = new javax.swing.JButton();
+        btBuscar = new javax.swing.JButton();
 
         jLabel1.setText(IdiomaESP.lbUsuario);
 
         jLabel2.setText(IdiomaESP.lbContrasena);
 
+        jtxtContrasena.setEnabled(false);
+
         jbActualizar.setText(IdiomaESP.btActualizar);
+        jbActualizar.setEnabled(false);
         jbActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbActualizarActionPerformed(evt);
@@ -62,29 +71,39 @@ public class jiRecuperarContraseña extends javax.swing.JInternalFrame {
             }
         });
 
+        btBuscar.setText(IdiomaESP.btBuscar);
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbActualizar)
-                                .addGap(22, 22, 22)
-                                .addComponent(jbCancelar)))))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtxtCuenta)
+                            .addComponent(jtxtContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btBuscar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jbActualizar)
+                        .addGap(27, 27, 27)
+                        .addComponent(jbCancelar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jSeparator1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,11 +111,12 @@ public class jiRecuperarContraseña extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtxtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtxtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -110,22 +130,51 @@ public class jiRecuperarContraseña extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarActionPerformed
-        // TODO add your handling code here:
+        if (jtxtContrasena.getText().isEmpty()) {
+            herramientas.Herramientas.MensajeAdv(IdiomaESP.mErMiCuentaCampoVacio);
+        } else {
+            cuenta.setContrasena(jtxtContrasena.getText());
+            if (hCuenta.editarCuenta(cuenta)) {
+                herramientas.Herramientas.MensajeInfo(IdiomaESP.mMiCuentaActualizada);
+                jtxtCuenta.setEnabled(true);;
+                jtxtCuenta.setText("");
+                jtxtContrasena.setText("");
+                jtxtContrasena.setEnabled(false);
+                jbActualizar.setEnabled(false);
+            }
+        }
     }//GEN-LAST:event_jbActualizarActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
-       this.dispose();
-       // sdfsd
+        this.dispose();
+        // sdfsd
     }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        cuenta = hCuenta.buscarCuenta(this.jtxtCuenta.getText());
+        if (cuenta == null) {
+            herramientas.Herramientas.MensajeErr(IdiomaESP.mNoCuentaEncontrada(jtxtCuenta.getText()), IdiomaESP.tNoCuentaEncontrada);
+        } else {
+            if (cuenta.getTipoCuenta().equals("a") || cuenta.getTipoCuenta().equals("s")) {
+                herramientas.Herramientas.MensajeErr(IdiomaESP.mNoPrivilegioCuenta, IdiomaESP.tNoPrivilegioCuenta);
+            } else {
+                jtxtContrasena.setEnabled(true);
+                jbActualizar.setEnabled(true);
+                jtxtCuenta.setEnabled(!false);
+            }
+        }
+
+    }//GEN-LAST:event_btBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton jbActualizar;
     private javax.swing.JButton jbCancelar;
+    private javax.swing.JTextField jtxtContrasena;
+    private javax.swing.JTextField jtxtCuenta;
     // End of variables declaration//GEN-END:variables
 }

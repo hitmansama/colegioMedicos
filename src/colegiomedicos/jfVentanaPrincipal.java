@@ -130,7 +130,7 @@ public class jfVentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu01Item01ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+       herramientas.Herramientas.AgregarVenEscritorio(jDesktopPane1,new jiAdministrarCuentas(cuenta));
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -138,7 +138,7 @@ public class jfVentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-         herramientas.Herramientas.AgregarVenEscritorio(jDesktopPane1,new jiRecuperarContraseña(IdiomaESP.tMiCuenta));
+         herramientas.Herramientas.AgregarVenEscritorio(jDesktopPane1,new jiRecuperarContraseña(IdiomaESP.tRecuperarContrasena));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**

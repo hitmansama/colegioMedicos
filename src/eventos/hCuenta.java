@@ -1,5 +1,5 @@
-
 package eventos;
+
 import herramientas.HibernateUtil;
 import java.util.Iterator;
 import java.util.List;
@@ -10,28 +10,32 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pojos.Cuenta;
+
 public class hCuenta {
-    public static Cuenta buscarCuenta(String _usuario){
+
+    public static Cuenta buscarCuenta(String _usuario) {
         Cuenta cuenta = null;
         List<Cuenta> cuentas = buscarCuentas();
         Iterator it = cuentas.iterator();
-        while(it.hasNext()){
-            Cuenta  aux = (Cuenta)it.next();
-            if(aux.getUsuario().equals(_usuario)){
+        while (it.hasNext()) {
+            Cuenta aux = (Cuenta) it.next();
+            if (aux.getUsuario().equals(_usuario)) {
                 return aux;
             }
         }
         return null;
     }
-    public static Cuenta obtenerCuenta(int _id){
-       SessionFactory sf = HibernateUtil.abrirConexion();
-       Cuenta l = null;
+
+    public static Cuenta obtenerCuenta(int _id) {
+        SessionFactory sf = HibernateUtil.abrirConexion();
+        Cuenta l = null;
         Session session = sf.openSession();
-        l = (Cuenta) session.get(Cuenta.class,_id);
+        l = (Cuenta) session.get(Cuenta.class, _id);
         HibernateUtil.cerrarSesion(sf);
         return l;
     }
-    private static List<Cuenta> buscarCuentas (){
+
+    public static List<Cuenta> buscarCuentas() {
         SessionFactory sf = HibernateUtil.abrirConexion();
         List<Cuenta> l = null;
         Session session = sf.openSession();
@@ -40,7 +44,24 @@ public class hCuenta {
         HibernateUtil.cerrarSesion(sf);
         return l;
     }
-    public static boolean editarCuenta(Cuenta _cuenta){
+    
+    public static boolean guardarCuenta (Cuenta _cuenta){
+        SessionFactory sf = HibernateUtil.abrirConexion();
+        Session session = sf.openSession();
+        Transaction tx = session.beginTransaction();
+         try {
+            session.save(_cuenta);
+            tx.commit();
+            HibernateUtil.cerrarSesion();
+            return true;
+        } catch (Exception e) {
+            tx.rollback();
+            Logger.getLogger(hCuenta.class.getName()).log(Level.SEVERE, null, e);
+        }
+        HibernateUtil.cerrarSesion(sf);
+        return false;
+    }
+    public static boolean editarCuenta(Cuenta _cuenta) {
         SessionFactory sf = HibernateUtil.abrirConexion();
         Session session = sf.openSession();
         Transaction tx = session.beginTransaction();
@@ -72,5 +93,5 @@ public class hCuenta {
         HibernateUtil.cerrarSesion(sf);
         return false;
     }*/
-    
+
 }

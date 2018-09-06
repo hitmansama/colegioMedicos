@@ -16,8 +16,9 @@ public class jiSuperAdminCuentas extends javax.swing.JInternalFrame {
      */
     public jiSuperAdminCuentas(String _titulo) {
         initComponents();
+        
         this.setTitle(_titulo);
-         this.setClosable(true);
+        this.setClosable(true);
         this.setIconifiable(true);
         this.setResizable(false);
     }
