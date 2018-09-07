@@ -41,6 +41,11 @@ public final class IdiomaESP {
     //
     public final static String tSupAdminCuenta = "administrador Cuentas";
     public final static String mErEditarSinSele = "Debe seleccionar un objeto de la tabla";
+    public final static String tDatosPersonales = "Datos personales";
+    public final static String tDatosEducacion = "Datos de educación";
+    public final static String tDatosContacto = "Datos de contacto";
+    public final static String lCodigo = "Código";
+    public final static String lCedula = "Cédula";
     //TITULOS JOPTION
     public final static String jopInf = "Información";
     public final static String jopErr = "Error";
