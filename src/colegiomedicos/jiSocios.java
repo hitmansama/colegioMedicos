@@ -5,7 +5,7 @@
  */
 package colegiomedicos;
 
-import com.placeholder.PlaceHolder;
+
 import eventos.hSocio;
 import herramientas.IdiomaESP;
 import java.util.Iterator;
@@ -27,9 +27,9 @@ public class jiSocios extends javax.swing.JInternalFrame {
      */
     public jiSocios() {
         initComponents();
-        PlaceHolder holder = new PlaceHolder(jTextField1, "Cedula, nombre o apellidos");
         cargarTabla();
-        this.requestFocusInWindow();
+        this.requestFocusInWindow(true);
+        this.requestFocus();
     }
 
     public void cargarTabla() {

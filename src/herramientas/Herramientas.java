@@ -35,7 +35,12 @@ import javax.swing.JMenuItem;
  *
  * @author PC
  */
+
 public final class Herramientas {
+    
+    public final static String obligatorio(String _texto){
+        return "<html><font color=black>"+_texto+"</font><font color=red>*</font></html>";
+    }
     public static void fullSecreen(JFrame ventana) {
         ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -146,6 +151,14 @@ public final class Herramientas {
         } catch (IOException ex) {
             // Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return imageIcon;
+    }
+     public ImageIcon getIconoExternal(String url, int ancho, int alto) {
+        ImageIcon imageIcon = null;
+        imageIcon = new ImageIcon(url); // Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        Image aux = imageIcon.getImage();
+        float anchPor = imageIcon.getIconWidth()/ancho;
+        imageIcon = new ImageIcon(aux.getScaledInstance(ancho,alto,Image.SCALE_AREA_AVERAGING));
         return imageIcon;
     }
 

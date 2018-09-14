@@ -1,5 +1,5 @@
 package pojos;
-// Generated 04-sep-2018 10:11:13 by Hibernate Tools 4.3.1
+// Generated 11-sep-2018 10:00:25 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -22,6 +22,7 @@ public class Socio  implements java.io.Serializable {
      private String provincia;
      private String pais;
      private String graduacionUni;
+     private String tituloDe;
      private String inscripcionSanitaria;
      private String libro;
      private String folio;
@@ -46,19 +47,21 @@ public class Socio  implements java.io.Serializable {
      private Date fechaAfiliacion;
      private String lugarAfiliacion;
      private byte[] fotoAsociado;
+     private String estadoSocio;
      private Set auditoriacuentas = new HashSet(0);
 
     public Socio() {
     }
 
 	
-    public Socio(String codigo, String apellidoPaterno, String apellidoMaterno, String nombres, Date fechaNacimiento, String graduacionUni, String inscripcionSanitaria, String lugarGrad, Date fehaGrad, String medicaturaRural, Date fechaRural, String estadoCivil, String email, String telfCelular, String cedula, String grupoSanguineo, Date fechaAfiliacion, String lugarAfiliacion) {
+    public Socio(String codigo, String apellidoPaterno, String apellidoMaterno, String nombres, Date fechaNacimiento, String graduacionUni, String tituloDe, String inscripcionSanitaria, String lugarGrad, Date fehaGrad, String medicaturaRural, Date fechaRural, String estadoCivil, String email, String telfCelular, String cedula, String grupoSanguineo, Date fechaAfiliacion, String lugarAfiliacion) {
         this.codigo = codigo;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.nombres = nombres;
         this.fechaNacimiento = fechaNacimiento;
         this.graduacionUni = graduacionUni;
+        this.tituloDe = tituloDe;
         this.inscripcionSanitaria = inscripcionSanitaria;
         this.lugarGrad = lugarGrad;
         this.fehaGrad = fehaGrad;
@@ -72,7 +75,7 @@ public class Socio  implements java.io.Serializable {
         this.fechaAfiliacion = fechaAfiliacion;
         this.lugarAfiliacion = lugarAfiliacion;
     }
-    public Socio(String codigo, String apellidoPaterno, String apellidoMaterno, String nombres, Date fechaNacimiento, String ciudad, String provincia, String pais, String graduacionUni, String inscripcionSanitaria, String libro, String folio, String lugarGrad, Date fehaGrad, String especialidad, String universidadEsp, Date fechaEsp, String medicaturaRural, Date fechaRural, String estadoCivil, String nombresConyuge, String lugarResidencia, String direccionResidencia, String telfResidencia, String direccionConsultorio, String telfConsultorio, String email, String telfCelular, String cedula, String grupoSanguineo, Date fechaAfiliacion, String lugarAfiliacion, byte[] fotoAsociado, Set auditoriacuentas) {
+    public Socio(String codigo, String apellidoPaterno, String apellidoMaterno, String nombres, Date fechaNacimiento, String ciudad, String provincia, String pais, String graduacionUni, String tituloDe, String inscripcionSanitaria, String libro, String folio, String lugarGrad, Date fehaGrad, String especialidad, String universidadEsp, Date fechaEsp, String medicaturaRural, Date fechaRural, String estadoCivil, String nombresConyuge, String lugarResidencia, String direccionResidencia, String telfResidencia, String direccionConsultorio, String telfConsultorio, String email, String telfCelular, String cedula, String grupoSanguineo, Date fechaAfiliacion, String lugarAfiliacion, byte[] fotoAsociado, String estadoSocio, Set auditoriacuentas) {
        this.codigo = codigo;
        this.apellidoPaterno = apellidoPaterno;
        this.apellidoMaterno = apellidoMaterno;
@@ -82,6 +85,7 @@ public class Socio  implements java.io.Serializable {
        this.provincia = provincia;
        this.pais = pais;
        this.graduacionUni = graduacionUni;
+       this.tituloDe = tituloDe;
        this.inscripcionSanitaria = inscripcionSanitaria;
        this.libro = libro;
        this.folio = folio;
@@ -106,6 +110,7 @@ public class Socio  implements java.io.Serializable {
        this.fechaAfiliacion = fechaAfiliacion;
        this.lugarAfiliacion = lugarAfiliacion;
        this.fotoAsociado = fotoAsociado;
+       this.estadoSocio = estadoSocio;
        this.auditoriacuentas = auditoriacuentas;
     }
    
@@ -178,6 +183,13 @@ public class Socio  implements java.io.Serializable {
     
     public void setGraduacionUni(String graduacionUni) {
         this.graduacionUni = graduacionUni;
+    }
+    public String getTituloDe() {
+        return this.tituloDe;
+    }
+    
+    public void setTituloDe(String tituloDe) {
+        this.tituloDe = tituloDe;
     }
     public String getInscripcionSanitaria() {
         return this.inscripcionSanitaria;
@@ -346,6 +358,13 @@ public class Socio  implements java.io.Serializable {
     
     public void setFotoAsociado(byte[] fotoAsociado) {
         this.fotoAsociado = fotoAsociado;
+    }
+    public String getEstadoSocio() {
+        return this.estadoSocio;
+    }
+    
+    public void setEstadoSocio(String estadoSocio) {
+        this.estadoSocio = estadoSocio;
     }
     public Set getAuditoriacuentas() {
         return this.auditoriacuentas;

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 04-sep-2018 10:11:13 by Hibernate Tools 4.3.1 -->
+<!-- Generated 11-sep-2018 10:00:26 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojos.Socio" table="socio" catalog="colegiomedicosdb" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
@@ -35,6 +35,9 @@
         <property name="graduacionUni" type="string">
             <column name="graduacionUni" length="150" not-null="true" />
         </property>
+        <property name="tituloDe" type="string">
+            <column name="tituloDe" length="45" not-null="true" />
+        </property>
         <property name="inscripcionSanitaria" type="string">
             <column name="inscripcionSanitaria" length="20" not-null="true" />
         </property>
@@ -45,7 +48,7 @@
             <column name="folio" length="45" />
         </property>
         <property name="lugarGrad" type="string">
-            <column name="lugarGrad" length="15" not-null="true" />
+            <column name="lugarGrad" length="150" not-null="true" />
         </property>
         <property name="fehaGrad" type="date">
             <column name="fehaGrad" length="10" not-null="true" />
@@ -106,6 +109,9 @@
         </property>
         <property name="fotoAsociado" type="binary">
             <column name="fotoAsociado" />
+        </property>
+        <property name="estadoSocio" type="string">
+            <column name="estadoSocio" length="1" />
         </property>
         <set name="auditoriacuentas" table="auditoriacuenta" inverse="true" lazy="true" fetch="select">
             <key>

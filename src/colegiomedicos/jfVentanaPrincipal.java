@@ -5,6 +5,7 @@
  */
 package colegiomedicos;
 
+import herramientas.FondoEscritorio;
 import herramientas.IdiomaESP;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
@@ -49,6 +50,9 @@ public class jfVentanaPrincipal extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -158,6 +162,10 @@ public class jfVentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         Herramientas.AgregarVenEscritorio(jDesktopPane1,new jiSocios());
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+       jDesktopPane1.setBorder(new FondoEscritorio(getClass().getResource("/Recursos/fondoNegro.jpg").toString()));
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 04-sep-2018 10:11:13 by Hibernate Tools 4.3.1 -->
+<!-- Generated 11-sep-2018 10:00:26 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojos.Auditoriacuenta" table="auditoriacuenta" catalog="colegiomedicosdb" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="cuenta" class="pojos.Cuenta" fetch="select" lazy="false">
+        <many-to-one name="cuenta" class="pojos.Cuenta" fetch="select">
             <column name="cuenta_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="socio" class="pojos.Socio" fetch="select" lazy="false">
+        <many-to-one name="socio" class="pojos.Socio" fetch="select">
             <column name="socio_id" />
         </many-to-one>
         <property name="detalle" type="string">
