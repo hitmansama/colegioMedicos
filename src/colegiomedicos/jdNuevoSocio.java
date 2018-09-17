@@ -8,19 +8,17 @@ package colegiomedicos;
 import herramientas.IdiomaESP;
 import herramientas.Herramientas;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import eventos.hSocio.*;
 import Atxy2k.CustomTextField.RestrictedTextField;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
+import eventos.hSocio;
+import java.awt.Dimension;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,6 +30,7 @@ public class jdNuevoSocio extends javax.swing.JDialog {
      * Creates new form jdNuevoSocio
      */
     private byte[] imagen;
+    Dimension dImagen = null;
 
     public jdNuevoSocio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -42,8 +41,8 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         this.requestFocusInWindow();
         jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
         jdFechaNac.setText("");
-        System.out.println("calendario");
-        jdFechaNac.getText();
+        dImagen = new Dimension(jlbImagen.getWidth(), jlbImagen.getHeight());
+        jdCreacion.setText("");
     }
 
     public boolean vacio(JTextField _texto) {
@@ -52,11 +51,68 @@ public class jdNuevoSocio extends javax.swing.JDialog {
     }
 
     public boolean camposLlenos() {
-        return false;
+
+        return (vacio(jtxtCodigo) || vacio(jtxtCedula) || vacio(jtxtNombres) || vacio(jtxtApMat) || vacio(jtxtApPat) || jdFechaNac.getSelectedDate() == null || jcbGrupoSanguineo.getSelectedIndex() == 0 || jcEstadoCivil1.getSelectedIndex() == 0 || (jcEstadoCivil1.getSelectedIndex() == 2 ? vacio(jtxtNombreConyugue) : false)
+                || vacio(jtxtTitulo) || vacio(jtxtUniversidadGraduado) || vacio(jtxtLugarGraduacion) || jdFechaGraduacion.getSelectedDate() == null || vacio(jtxtInscripcionSanitaria) || vacio(jtxtRural) || jdFechaRural.getSelectedDate() == null
+                || vacio(jtxtResidencia) || vacio(jtxtTelefonoResidencia) || vacio(jtxtCelular) || vacio(jtxtemail)
+                || jcbEstado.getSelectedIndex() == 0 || vacio(jtxtLugar) || jdCreacion.getSelectedDate() == null);
+    }
+
+    public void vaciarCampos() {
+        jtxtCodigo.setText("");
+        jtxtApMat.setText("");
+        jtxtApPat.setText("");
+        jtxtCedula.setText("");
+        jtxtCelular.setText("");
+        jtxtCiudad.setText("");
+        jtxtDireccionConsultorio.setText("");
+        jtxtDireccionResidencia.setText("");
+        jtxtEspacialidad.setText("");
+        jtxtFolio.setText("");
+        jtxtInscripcionSanitaria.setText("");
+        jtxtLibro.setText("");
+        jtxtFolio.setText("");
+        jtxtLugar.setText(IdiomaESP.opLugar);
+        jtxtLugarGraduacion.setText("");
+        jtxtNombreConyugue.setText("");
+        jtxtNombres.setText("");
+        jtxtPais.setText("");
+        jtxtProvincia.setText("");
+        jtxtResidencia.setText("");
+        jtxtRural.setText("");
+        jtxtTelefonoConsultorio.setText("");
+        jtxtTelefonoResidencia.setText("");
+        jtxtTitulo.setText("");
+        jtxtUniversidadEspecialidad.setText("");
+        jtxtUniversidadGraduado.setText("");
+        jtxtemail.setText("");
+        jcEstadoCivil1.setSelectedIndex(0);
+        jcbEstado.setSelectedIndex(0);
+        jcbGrupoSanguineo.setSelectedIndex(0);
+        jdCreacion.setSelectedDate(null);
+        jdCreacion.setText("");
+        jdFechaEspecialidad.setSelectedDate(null);
+        jdFechaEspecialidad.setText("");
+        jdFechaGraduacion.setSelectedDate(null);
+        jdFechaGraduacion.setText("");
+        jdFechaNac.setSelectedDate(null);
+        jdFechaNac.setText("");
+        jdFechaRural.setSelectedDate(null);
+        jdFechaRural.setText("");
+        imagen = null;
+        jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", dImagen.width, dImagen.height));
+        jtxtCodigo.requestFocus();
     }
 
     public void guardar() {
-
+        if(hSocio.codigoDublicado(jtxtCodigo.getText())){
+            Herramientas.MensajeErr(IdiomaESP.mErCodigoDupSocio,IdiomaESP.tGuardarSocio);
+            return;
+        }
+        if(hSocio.cedulaDublicado(jtxtCedula.getText())){
+            Herramientas.MensajeErr(IdiomaESP.mErCedulaDupSocio,IdiomaESP.tGuardarSocio);
+            return;
+        }
         datosPersonales datos = new datosPersonales();
         datosEstudios estudios = new datosEstudios();
         datosContacto contacto = new datosContacto();
@@ -68,11 +124,12 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         datos.setCodigo(jtxtCodigo.getText());
         datos.setConyuge(jtxtNombreConyugue.getText());
         datos.setEstadoCivil(jcEstadoCivil1.getSelectedItem().toString());
-        datos.setFechaNacimiento(jdFechaNac.getSelectedDate().getTime()); 
+        datos.setFechaNacimiento(jdFechaNac.getSelectedDate().getTime());
         datos.setGrupoSanguineo(jcbGrupoSanguineo.getSelectedItem().toString());
         datos.setNombres(jtxtNombres.getText());
         datos.setPais(jtxtPais.getText());
         datos.setProvincia(jtxtProvincia.getText());
+
         estudios.setUniversidadGraduacion(jtxtUniversidadGraduado.getText());
         estudios.setTituloGraduacion(jtxtTitulo.getText());
         estudios.setFechaGraduacion(jdFechaGraduacion.getSelectedDate().getTime());
@@ -82,9 +139,10 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         estudios.setInscripcionSanitaria(jtxtInscripcionSanitaria.getText());
         estudios.setUniversidadEspecialidad(jtxtUniversidadEspecialidad.getText());
         estudios.setTituloEspecialidad(jtxtEspacialidad.getText());
-        estudios.setFechaEspecialidad(jdFechaEspecialidad.getSelectedDate().getTime());
+        estudios.setFechaEspecialidad(jdFechaEspecialidad.getSelectedDate()!=null?jdFechaEspecialidad.getSelectedDate().getTime():null);
         estudios.setMedicaturaRural(jtxtRural.getText());
         estudios.setFechaRural(jdFechaRural.getSelectedDate().getTime());
+
         contacto.setCelular(jtxtCelular.getText());
         contacto.setConsultorio(jtxtDireccionConsultorio.getText());
         contacto.setDireccion(jtxtDireccionResidencia.getText());
@@ -92,6 +150,13 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         contacto.setResidencia(jtxtResidencia.getText());
         contacto.setTelefono(jtxtTelefonoResidencia.getText());
         contacto.setTelfonoConsultorio(jtxtTelefonoConsultorio.getText());
+
+        if (hSocio.guardarSocioNuevo(datos, estudios, contacto, jcbEstado.getSelectedIndex() == 1 ? "a" : "i", jtxtLugar.getText(), jdCreacion.getSelectedDate().getTime(), imagen)) {
+            Herramientas.MensajeInfo(IdiomaESP.mGuardarNuevoSocio, IdiomaESP.tGuardarSocio);
+            vaciarCampos();
+        } else {
+            Herramientas.MensajeErr(IdiomaESP.mErGuardarNuevoSocio, IdiomaESP.tGuardarSocio);
+        }
     }
 
     /**
@@ -181,6 +246,15 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jcbEstado = new javax.swing.JComboBox<>();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel36 = new javax.swing.JLabel();
+        jdCreacion = new datechooser.beans.DateChooserCombo();
+        jLabel37 = new javax.swing.JLabel();
+        jtxtLugar = new javax.swing.JTextField();
+        RestrictedTextField rdLugar = new RestrictedTextField(jtxtLugar);
+        rdLugar.setLimit(45);
+        rdLugar.setOnlyText(true);
+        jtxtLugar.setText(IdiomaESP.opLugar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -262,13 +336,7 @@ public class jdNuevoSocio extends javax.swing.JDialog {
                 (datechooser.view.BackRenderer)null,
                 false,
                 true)));
-    jdFechaNac.setNothingAllowed(false);
     jdFechaNac.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
-    jdFechaNac.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
-        public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
-            jdFechaNacOnSelectionChange(evt);
-        }
-    });
 
     jLabel9.setText(IdiomaESP.lbPais);
 
@@ -629,7 +697,12 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
         }
     });
 
-    jButton4.setText("jButton3");
+    jButton4.setText(IdiomaESP.btCancelar);
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton4ActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
@@ -688,11 +761,10 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
     rdTelCon.setAcceptCharacters("0123456789--");
     rdTelCon.setOnlyCustomCharacters(true);
 
-    jLabel32.setText(IdiomaESP.lbCorreo);
+    jLabel32.setText(Herramientas.obligatorio(IdiomaESP.lbCorreo));
 
     RestrictedTextField rdemail = new RestrictedTextField(jtxtemail);
     rdemail.setLimit(100);
-    rdemail.setOnlyAlphaNumeric(true);
 
     jLabel33.setText(Herramientas.obligatorio(IdiomaESP.lbCelular));
 
@@ -789,6 +861,43 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
+    jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(IdiomaESP.tFechaAfi));
+
+    jLabel36.setText(Herramientas.obligatorio(IdiomaESP.lbFechaGrad));
+
+    jdCreacion.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
+
+    jLabel37.setText(Herramientas.obligatorio(IdiomaESP.lbLugar));
+
+    javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+    jPanel6.setLayout(jPanel6Layout);
+    jPanel6Layout.setHorizontalGroup(
+        jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel6Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel37)
+                .addComponent(jLabel36))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jdCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jtxtLugar))
+            .addContainerGap())
+    );
+    jPanel6Layout.setVerticalGroup(
+        jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel6Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel37)
+                .addComponent(jtxtLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jdCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel36))
+            .addContainerGap())
+    );
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -803,7 +912,8 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
@@ -821,7 +931,9 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
     );
@@ -835,7 +947,7 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
                 imagen = Herramientas.toByte(jfc.getSelectedFile());
-                jlbImagen.setIcon(new ImageIcon(herramientas.Herramientas.toImage(imagen).getScaledInstance(jlbImagen.getWidth(), jlbImagen.getHeight(), Image.SCALE_AREA_AVERAGING)));
+                jlbImagen.setIcon(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)));
             } catch (IOException ex) {
                 Logger.getLogger(jdNuevoSocio.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -845,12 +957,15 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         imagen = null;
-        jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
+        jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", dImagen.width, dImagen.height));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String aux = camposLlenos() ? "SI" : "NO";
-        herramientas.Herramientas.MensajeAdv("CAMPOS LLENOS " + vacio(jtxtCedula));
+        if (!camposLlenos()) {
+            guardar();
+        } else {
+            herramientas.Herramientas.MensajeAdv(IdiomaESP.mErCamposObligatorios);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jcEstadoCivil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcEstadoCivil1ActionPerformed
@@ -858,13 +973,13 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         jLabel13.setText(jcEstadoCivil1.getSelectedIndex() == 2 ? Herramientas.obligatorio(IdiomaESP.lbNombreConyuge) : IdiomaESP.lbNombreConyuge);
     }//GEN-LAST:event_jcEstadoCivil1ActionPerformed
 
-    private void jdFechaNacOnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_jdFechaNacOnSelectionChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jdFechaNacOnSelectionChange
-
     private void jtxtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtTituloActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       vaciarCampos();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -942,6 +1057,8 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -953,10 +1070,12 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> jcEstadoCivil1;
     private javax.swing.JComboBox<String> jcbEstado;
     private javax.swing.JComboBox<String> jcbGrupoSanguineo;
+    private datechooser.beans.DateChooserCombo jdCreacion;
     private datechooser.beans.DateChooserCombo jdFechaEspecialidad;
     private datechooser.beans.DateChooserCombo jdFechaGraduacion;
     private datechooser.beans.DateChooserCombo jdFechaNac;
@@ -974,6 +1093,7 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     private javax.swing.JTextField jtxtFolio;
     private javax.swing.JTextField jtxtInscripcionSanitaria;
     private javax.swing.JTextField jtxtLibro;
+    private javax.swing.JTextField jtxtLugar;
     private javax.swing.JTextField jtxtLugarGraduacion;
     private javax.swing.JTextField jtxtNombreConyugue;
     private javax.swing.JTextField jtxtNombres;

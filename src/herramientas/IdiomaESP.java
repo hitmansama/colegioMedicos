@@ -20,6 +20,9 @@ public final class IdiomaESP {
     public final static String tNoCuentaEncontrada = "Cuenta no encontrada";
     public final static String tErrorContra = "Error contraseña";
     public final static String mErrorContra = "Contraseña equivocada. Revise su contraseña e inténtelo nuevamente.";
+    public final static String tFechaAfi = "Fecha afiliacion";
+    public final static String lbLugar = "Lugar";
+    public final static String opLugar = "Portoviejo";
 //ventana principal
     public final static String tPrincipal = "Colegio de médicos (Sistema de control socios).";
     public final static String op01 = "Programa";
@@ -35,8 +38,14 @@ public final class IdiomaESP {
     public final static String btActualizar = "Actualizar";
     public final static String btCancelar = "Cancelar";
     public final static String mErMiCuentaCampoVacio = "Todos los campos son obligatorios.";
+    public final static String mErCamposObligatorios = "<html><font color=black> Los campos marcados con </font><font color=red>*</font><font color = black> son obligatorios</font></html>";
     public final static String mMiCuentaActualizada = "Se actualizó con éxito la cuenta";
     public final static String mErMiCuentaGuardar = "No se pudo actualizar la cuenta.";
+    public final static String mGuardarNuevoSocio = "Nuevo Socio Guardado correctamente";
+    public final static String mErGuardarNuevoSocio = "No se pudo guardar el nuevo socio";
+    public final static String tGuardarSocio = "Guardar socio";
+    public final static String mErCodigoDupSocio ="Codigo de socio duplicado";
+    public final static String mErCedulaDupSocio= "Cedula de socio duplicado ";
     // venana Recuperar contraseña
     public final static String tRecuperarContrasena = "Recuperar contraseñas cuentas";
     public final static String btBuscar = "Buscar";
@@ -122,7 +131,7 @@ public final class IdiomaESP {
     public final static String phConsultorio = "ejm Plaza Medic";
     public final static String lbTelfono = "Telefono";
     public final static String phTelefono = "ejm 052635542";
-    public final static String lbCorreo  = "email";
+    public final static String lbCorreo = "email";
     public final static String phCorreo = "ejm nombre@xmail.com";
     public final static String lbCelular = "Celular";
     public final static String phCelular = "ejm 0999123456";

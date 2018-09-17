@@ -1,11 +1,14 @@
 package eventos;
 
+import herramientas.Herramientas;
 import herramientas.HibernateUtil;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
+import org.hibernate.HibernateError;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,10 +16,12 @@ import org.hibernate.Transaction;
 import pojos.Socio;
 
 public class hSocio {
-    public  hSocio(){
-        
+
+    public hSocio() {
+
     }
-    public static class datosPersonales  {
+
+    public static class datosPersonales {
 
         public datosPersonales() {
         }
@@ -35,7 +40,7 @@ public class hSocio {
             this.conyuge = conyuge;
             this.foto = foto;
             this.grupoSanguineo = grupoSanguineo;
-            
+
         }
 
         public datosPersonales(String codigo, String nombres, String apellidosPaternos, String apellidosMaternos, String cedula, Date fechaNacimiento, String pais, String ciudad, String provincia, String estadoCivil, String conyuge, String grupoSanguineo) {
@@ -395,7 +400,28 @@ public class hSocio {
         return l;
     }
 
-    public static boolean guardarSocioNuevo(datosPersonales _datosPersonales, datosEstudios _datosEstudios, datosContacto _datosContacto, String _estado) {
+    public static boolean codigoDublicado(String _codigo) {
+        SessionFactory sf = HibernateUtil.abrirConexion();
+        List<Socio> l = null;
+        Session session = sf.openSession();
+        Query hq = session.createQuery("from Socio where codigo =:_codigo");
+        hq.setParameter("_codigo", _codigo);
+        Socio aux = (Socio) hq.uniqueResult();
+        HibernateUtil.cerrarSesion(sf);
+        return aux!=null;
+    }
+     public static boolean cedulaDublicado(String _cedula) {
+        SessionFactory sf = HibernateUtil.abrirConexion();
+        List<Socio> l = null;
+        Session session = sf.openSession();
+        Query hq = session.createQuery("from Socio where cedula =:_cedula");
+        hq.setParameter("_cedula", _cedula);
+        Socio aux = (Socio) hq.uniqueResult();
+        HibernateUtil.cerrarSesion(sf);
+        return aux!=null;
+    }
+
+    public static boolean guardarSocioNuevo(datosPersonales _datosPersonales, datosEstudios _datosEstudios, datosContacto _datosContacto, String _estado, String _lugar, Date _fechaCreacion) {
         Socio socio = new Socio();
         socio.setCodigo(_datosPersonales.getCodigo());
         socio.setCedula(_datosPersonales.getCedula());
@@ -429,6 +455,8 @@ public class hSocio {
         socio.setEmail(_datosContacto.getEmail());
         socio.setTelfCelular(_datosContacto.getCelular());
         socio.setEstadoSocio(_estado);
+        socio.setLugarAfiliacion(_lugar);
+        socio.setFechaAfiliacion(_fechaCreacion);
         SessionFactory sf = HibernateUtil.abrirConexion();
         Session session = sf.getCurrentSession();
         Transaction tx = session.beginTransaction();
@@ -443,17 +471,52 @@ public class hSocio {
         return false;
     }
 
-    public static boolean guardarSocioNuevo(Socio _socio) {
-
+    public static boolean guardarSocioNuevo(datosPersonales _datosPersonales, datosEstudios _datosEstudios, datosContacto _datosContacto, String _estado, String _lugar, Date _fechaCreacion, byte[] _imagen) {
+        Socio socio = new Socio();
+        socio.setCodigo(_datosPersonales.getCodigo());
+        socio.setCedula(_datosPersonales.getCedula());
+        socio.setNombres(_datosPersonales.getNombres());
+        socio.setApellidoPaterno(_datosPersonales.getApellidosPaternos());
+        socio.setApellidoMaterno(_datosPersonales.getApellidosMaternos());
+        socio.setFechaNacimiento(_datosPersonales.getFechaNacimiento());
+        socio.setPais(_datosPersonales.getPais());
+        socio.setProvincia(_datosPersonales.getProvincia());
+        socio.setCiudad(_datosPersonales.getCiudad());
+        socio.setEstadoCivil(_datosPersonales.getEstadoCivil());
+        socio.setNombresConyuge(_datosPersonales.getConyuge());
+        socio.setGrupoSanguineo(_datosPersonales.getGrupoSanguineo());
+        socio.setGraduacionUni(_datosEstudios.getUniversidadGraduacion());
+        socio.setTituloDe(_datosEstudios.getTituloGraduacion());
+        socio.setInscripcionSanitaria(_datosEstudios.getInscripcionSanitaria());
+        socio.setLibro(_datosEstudios.getLibro());
+        socio.setFolio(_datosEstudios.getFolio());
+        socio.setLugarGrad(_datosEstudios.getLugarGraduacion());
+        socio.setFehaGrad(_datosEstudios.getFechaGraduacion());
+        socio.setEspecialidad(_datosEstudios.getTituloEspecialidad());
+        socio.setUniversidadEsp(_datosEstudios.getUniversidadEspecialidad());
+        socio.setFechaEsp(_datosEstudios.fechaEspecialidad);
+        socio.setMedicaturaRural(_datosEstudios.getMedicaturaRural());
+        socio.setFechaRural(_datosEstudios.getFechaRural());
+        socio.setDireccionResidencia(_datosContacto.getDireccion());
+        socio.setLugarResidencia(_datosContacto.getResidencia());
+        socio.setTelfResidencia(_datosContacto.getTelefono());
+        socio.setDireccionConsultorio(_datosContacto.getConsultorio());
+        socio.setTelfConsultorio(_datosContacto.getTelfonoConsultorio());
+        socio.setEmail(_datosContacto.getEmail());
+        socio.setTelfCelular(_datosContacto.getCelular());
+        socio.setEstadoSocio(_estado);
+        socio.setLugarAfiliacion(_lugar);
+        socio.setFechaAfiliacion(_fechaCreacion);
+        socio.setFotoAsociado(_imagen);
         SessionFactory sf = HibernateUtil.abrirConexion();
         Session session = sf.getCurrentSession();
         Transaction tx = session.beginTransaction();
         try {
-            session.save(_socio);
+            session.save(socio);
             tx.commit();
             HibernateUtil.cerrarSesion(sf);
             return true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             tx.rollback();
         }
         return false;

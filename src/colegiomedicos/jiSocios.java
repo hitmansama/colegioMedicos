@@ -49,7 +49,8 @@ public class jiSocios extends javax.swing.JInternalFrame {
                 objetos[0] = aux.getCedula();
                 objetos[1] = aux.getNombres() + " ";
                 objetos[2] = aux.getApellidoPaterno() + " " + aux.getApellidoMaterno();
-                objetos[3] = aux;
+                objetos[3] = aux.getEstadoSocio().equals("a")?IdiomaESP.lbOpActivo:IdiomaESP.lbOpInactivo;
+                objetos[4] = aux;
                 modelo.addRow(objetos);
             }
         }
@@ -168,6 +169,7 @@ public class jiSocios extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new jdNuevoSocio(null,true).setVisible(true);
+        cargarTabla();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened

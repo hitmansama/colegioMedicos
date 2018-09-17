@@ -1,8 +1,6 @@
 package herramientas;
 
-import colegiomedicos.jiMiCuenta;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -11,8 +9,6 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -22,11 +18,11 @@ import javax.swing.JOptionPane;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +46,8 @@ public final class Herramientas {
     }
 
     private static String TextoEditado(String vTexto) {
+       if(vTexto.contains("<html>"))
+           return vTexto;
         int n = 0;
         String tr = "";
         for (int i = 0; i < vTexto.length(); i++) {
@@ -140,16 +138,6 @@ public final class Herramientas {
         CentrarInternalEscritorio(ventana, escritorio);
         ventana.setVisible(true);
 
-    }
-
-    public static void cambiarIconoVentana(Window ventana, String url) {
-        try {
-            InputStream imageInputStream = ventana.getClass().getResourceAsStream(url);
-            BufferedImage bufferedImage = ImageIO.read(imageInputStream);
-            ventana.setIconImage(bufferedImage);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
     }
 
     public ImageIcon getIcono(String url, int ancho, int alto) {
@@ -263,17 +251,14 @@ public final class Herramientas {
     }
 
     public static byte[] toByte(File _file) throws IOException {
-        BufferedImage buffImage = ImageIO.read(_file);
-        WritableRaster raster = buffImage.getRaster();
-        DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
-        return data.getData();
+        Path pat = Paths.get(_file.getAbsolutePath());
+        byte[] data = null;
+        data = Files.readAllBytes(pat);
+        return data;
     }
 
-    public static BufferedImage toImage(byte[] codigoImagen) throws IOException {
-
-        ByteArrayInputStream bis = new ByteArrayInputStream(codigoImagen);
-        BufferedImage bImage = ImageIO.read(bis);
-        return bImage;
+    public static ImageIcon toImageIcon(byte[] codigoImagen){
+        return new ImageIcon(codigoImagen);
     }
 
     public static String formatearDecimal(Float _valor) {
