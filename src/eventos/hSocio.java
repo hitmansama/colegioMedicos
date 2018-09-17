@@ -2,8 +2,10 @@ package eventos;
 
 import herramientas.HibernateUtil;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.List;
+import javax.imageio.ImageIO;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,6 +35,7 @@ public class hSocio {
             this.conyuge = conyuge;
             this.foto = foto;
             this.grupoSanguineo = grupoSanguineo;
+            
         }
 
         public datosPersonales(String codigo, String nombres, String apellidosPaternos, String apellidosMaternos, String cedula, Date fechaNacimiento, String pais, String ciudad, String provincia, String estadoCivil, String conyuge, String grupoSanguineo) {
@@ -392,7 +395,7 @@ public class hSocio {
         return l;
     }
 
-    public static boolean guardarSocioNuevo(datosPersonales _datosPersonales, datosEstudios _datosEstudios, datosContacto _datosContacto) {
+    public static boolean guardarSocioNuevo(datosPersonales _datosPersonales, datosEstudios _datosEstudios, datosContacto _datosContacto, String _estado) {
         Socio socio = new Socio();
         socio.setCodigo(_datosPersonales.getCodigo());
         socio.setCedula(_datosPersonales.getCedula());
@@ -425,6 +428,7 @@ public class hSocio {
         socio.setTelfConsultorio(_datosContacto.getTelfonoConsultorio());
         socio.setEmail(_datosContacto.getEmail());
         socio.setTelfCelular(_datosContacto.getCelular());
+        socio.setEstadoSocio(_estado);
         SessionFactory sf = HibernateUtil.abrirConexion();
         Session session = sf.getCurrentSession();
         Transaction tx = session.beginTransaction();

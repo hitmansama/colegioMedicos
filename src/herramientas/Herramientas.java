@@ -23,6 +23,10 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -35,15 +39,16 @@ import javax.swing.JMenuItem;
  *
  * @author PC
  */
-
 public final class Herramientas {
-    
-    public final static String obligatorio(String _texto){
-        return "<html><font color=black>"+_texto+"</font><font color=red>*</font></html>";
+
+    public final static String obligatorio(String _texto) {
+        return "<html><font color=black>" + _texto + "</font><font color=red>*</font></html>";
     }
+
     public static void fullSecreen(JFrame ventana) {
         ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
+
     private static String TextoEditado(String vTexto) {
         int n = 0;
         String tr = "";
@@ -91,28 +96,33 @@ public final class Herramientas {
         p.y = Escritorio.getHeight() / 2 - ventana.getHeight() / 2;
         ventana.setLocation(p);
     }
+
     /**
-     * javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK)
+     * javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
+     * java.awt.event.InputEvent.SHIFT_MASK)
+     *
      * @param _texto
-     * @param _convinacionTecla 
+     * @param _convinacionTecla
      * @param _ventanaAbrir
      * @param _escritorio
-     * @return 
+     * @return
      */
-    public JMenuItem crearMenuItem(String _texto,javax.swing.KeyStroke _convinacionTecla, JInternalFrame _ventanaAbrir,JDesktopPane _escritorio){
-         JMenuItem menu01item01 = new JMenuItem(_texto);
-                menu01item01.setAccelerator(_convinacionTecla);
-                menu01item01.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jMenuAbrirInternal(evt,_ventanaAbrir,_escritorio);
-                    }
-                });
-               return menu01item01;
+    public JMenuItem crearMenuItem(String _texto, javax.swing.KeyStroke _convinacionTecla, JInternalFrame _ventanaAbrir, JDesktopPane _escritorio) {
+        JMenuItem menu01item01 = new JMenuItem(_texto);
+        menu01item01.setAccelerator(_convinacionTecla);
+        menu01item01.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAbrirInternal(evt, _ventanaAbrir, _escritorio);
+            }
+        });
+        return menu01item01;
     }
-    protected void jMenuAbrirInternal(java.awt.event.ActionEvent evt,JInternalFrame _ven,JDesktopPane _escritorio) { 
-            AgregarVenEscritorio(_escritorio, _ven);
-            
-    }     
+
+    protected void jMenuAbrirInternal(java.awt.event.ActionEvent evt, JInternalFrame _ven, JDesktopPane _escritorio) {
+        AgregarVenEscritorio(_escritorio, _ven);
+
+    }
+
     public static void AgregarVenEscritorio(JDesktopPane escritorio, JInternalFrame ventana) {
         for (JInternalFrame aux : escritorio.getAllFrames()) {
             if (aux.getName().equals(ventana.getName())) {
@@ -129,7 +139,7 @@ public final class Herramientas {
         escritorio.add(ventana);
         CentrarInternalEscritorio(ventana, escritorio);
         ventana.setVisible(true);
-        
+
     }
 
     public static void cambiarIconoVentana(Window ventana, String url) {
@@ -153,12 +163,13 @@ public final class Herramientas {
         }
         return imageIcon;
     }
-     public ImageIcon getIconoExternal(String url, int ancho, int alto) {
+
+    public ImageIcon getIconoExternal(String url, int ancho, int alto) {
         ImageIcon imageIcon = null;
         imageIcon = new ImageIcon(url); // Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         Image aux = imageIcon.getImage();
-        float anchPor = imageIcon.getIconWidth()/ancho;
-        imageIcon = new ImageIcon(aux.getScaledInstance(ancho,alto,Image.SCALE_AREA_AVERAGING));
+        float anchPor = imageIcon.getIconWidth() / ancho;
+        imageIcon = new ImageIcon(aux.getScaledInstance(ancho, alto, Image.SCALE_AREA_AVERAGING));
         return imageIcon;
     }
 
@@ -173,9 +184,11 @@ public final class Herramientas {
         ventana.setLocation(div.width / 2 - ventana.getWidth() / 2, div.height / 2 - ventana.getHeight() / 2);
 
     }
-    public static boolean isContrasena(String _contra,char[] _pass){
+
+    public static boolean isContrasena(String _contra, char[] _pass) {
         return _contra.equals(new String(_pass));
     }
+
     public static BufferedImage Redimensionar(InputStream imagen, int ancho, int alto) {
         BufferedImage im = null;
         /*int w = bufferedImage.getWidth();
@@ -247,6 +260,20 @@ public final class Herramientas {
                 }
             }
         }
+    }
+
+    public static byte[] toByte(File _file) throws IOException {
+        BufferedImage buffImage = ImageIO.read(_file);
+        WritableRaster raster = buffImage.getRaster();
+        DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
+        return data.getData();
+    }
+
+    public static BufferedImage toImage(byte[] codigoImagen) throws IOException {
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(codigoImagen);
+        BufferedImage bImage = ImageIO.read(bis);
+        return bImage;
     }
 
     public static String formatearDecimal(Float _valor) {

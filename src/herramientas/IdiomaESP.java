@@ -9,6 +9,9 @@ public final class IdiomaESP {
     public final static String mErLogin = "Cuenta o contraseña incorrectos.";
     public final static String btIngresar = "Ingresar";
     public final static String btSalir = "Salir";
+    public final static String tEstadoSocio = "Estado";
+    public final static String lbOpActivo = "Activo";
+    public final static String lbOpInactivo = "Inactivo";
 
     public final static String mNoCuentaEncontrada(String _cuenta) {
         return "No se encontró una cuenta " + _cuenta + " asociada.";

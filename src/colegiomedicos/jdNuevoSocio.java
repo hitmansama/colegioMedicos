@@ -18,6 +18,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import eventos.hSocio.*;
 import Atxy2k.CustomTextField.RestrictedTextField;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+
 /**
  *
  * @author PC
@@ -27,7 +31,7 @@ public class jdNuevoSocio extends javax.swing.JDialog {
     /**
      * Creates new form jdNuevoSocio
      */
-    private Image imagen;
+    private byte[] imagen;
 
     public jdNuevoSocio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -38,7 +42,8 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         this.requestFocusInWindow();
         jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
         jdFechaNac.setText("");
-        System.out.println("calendario"); jdFechaNac.getText();
+        System.out.println("calendario");
+        jdFechaNac.getText();
     }
 
     public boolean vacio(JTextField _texto) {
@@ -55,7 +60,7 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         datosPersonales datos = new datosPersonales();
         datosEstudios estudios = new datosEstudios();
         datosContacto contacto = new datosContacto();
-        
+
         datos.setApellidosMaternos(jtxtApMat.getText());
         datos.setApellidosPaternos(jtxtApPat.getText());
         datos.setCedula(jtxtCedula.getText());
@@ -63,8 +68,7 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         datos.setCodigo(jtxtCodigo.getText());
         datos.setConyuge(jtxtNombreConyugue.getText());
         datos.setEstadoCivil(jcEstadoCivil1.getSelectedItem().toString());
-        datos.setFechaNacimiento(jdFechaNac.getSelectedDate().getTime());
-        datos.setFoto(imagen);
+        datos.setFechaNacimiento(jdFechaNac.getSelectedDate().getTime()); 
         datos.setGrupoSanguineo(jcbGrupoSanguineo.getSelectedItem().toString());
         datos.setNombres(jtxtNombres.getText());
         datos.setPais(jtxtPais.getText());
@@ -174,6 +178,9 @@ public class jdNuevoSocio extends javax.swing.JDialog {
         jtxtemail = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         jtxtCelular = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jcbEstado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -256,7 +263,6 @@ public class jdNuevoSocio extends javax.swing.JDialog {
                 false,
                 true)));
     jdFechaNac.setNothingAllowed(false);
-    jdFechaNac.setLocale(new java.util.Locale("es", "EC", ""));
     jdFechaNac.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
     jdFechaNac.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
         public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
@@ -431,44 +437,90 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
 
     jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(IdiomaESP.tDatosEducacion));
 
-    jLabel2.setText(IdiomaESP.lbUniversidad);
+    jLabel2.setText(Herramientas.obligatorio(IdiomaESP.lbUniversidad));
 
-    jLabel14.setText(IdiomaESP.lbInsSanitaria);
+    RestrictedTextField rdunigrad = new RestrictedTextField(jtxtUniversidadGraduado);
+    rdunigrad.setAcceptSpace(true);
+    rdunigrad.setOnlyText(true);
+    rdunigrad.setLimit(150);
+
+    jLabel14.setText(Herramientas.obligatorio(IdiomaESP.lbInsSanitaria));
+
+    RestrictedTextField rdInsSan = new RestrictedTextField(jtxtInscripcionSanitaria);
+    rdInsSan.setOnlyAlphaNumeric(true);
+    rdInsSan.setLimit(20);
 
     jLabel15.setText(IdiomaESP.lbLibro);
 
+    RestrictedTextField rdLibro = new RestrictedTextField(jtxtLibro);
+    rdLibro.setLimit(45);
+    rdLibro.setOnlyAlphaNumeric(true);
+
     jLabel16.setText(IdiomaESP.lbFolio);
 
-    jLabel18.setText(IdiomaESP.lbLugarGrad);
+    RestrictedTextField rdFolio = new RestrictedTextField(jtxtFolio);
+    rdFolio.setLimit(45);
+    rdFolio.setOnlyAlphaNumeric(true);
 
-    jLabel19.setText(IdiomaESP.lbFechaGrad);
+    jLabel18.setText(Herramientas.obligatorio(IdiomaESP.lbLugarGrad));
 
-    jdFechaGraduacion.setLocale(new java.util.Locale("es", "EC", ""));
+    RestrictedTextField rdLugarGrad = new RestrictedTextField(jtxtLugarGraduacion);
+    rdLugarGrad.setOnlyText(true);
+    rdLugarGrad.setLimit(150);
+
+    jLabel19.setText(Herramientas.obligatorio(IdiomaESP.lbFechaGrad));
+
     jdFechaGraduacion.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
+    jdFechaGraduacion.setText("");
 
     jLabel20.setText(IdiomaESP.lbEspcialidad);
 
+    RestrictedTextField rdEspecialidad = new RestrictedTextField(jtxtEspacialidad);
+    rdEspecialidad.setLimit(100);
+    rdEspecialidad.setOnlyText(true);
+    rdEspecialidad.setAcceptSpace(true);
+
     jLabel21.setText(IdiomaESP.lbUniversidad);
+
+    RestrictedTextField rdUEspe = new RestrictedTextField(jtxtUniversidadEspecialidad);
+    rdUEspe.setLimit(100);
+    rdUEspe.setAcceptSpace(true);
+    rdUEspe.setOnlyText(true);
 
     jLabel22.setText(IdiomaESP.lbFechaGrad);
 
-    jdFechaEspecialidad.setLocale(new java.util.Locale("es", "EC", ""));
     jdFechaEspecialidad.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
+    jdFechaEspecialidad.setText("");
 
     jLabel17.setText(IdiomaESP.tGraduacion);
 
     jLabel23.setText(IdiomaESP.tEspecialidad);
 
-    jLabel24.setText(IdiomaESP.lbRural);
+    jLabel24.setText(Herramientas.obligatorio(IdiomaESP.lbRural));
 
-    jLabel25.setText(IdiomaESP.lbFechaGrad);
+    jLabel25.setText(Herramientas.obligatorio(IdiomaESP.lbFechaGrad));
 
-    jdFechaRural.setLocale(new java.util.Locale("es", "EC", ""));
+    RestrictedTextField rdRural = new RestrictedTextField(jtxtRural);
+    rdRural.setLimit(100);
+    rdRural.setAcceptSpace(true);
+    rdRural.setOnlyText(true);
+
     jdFechaRural.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
+    jdFechaRural.setText("");
 
     jLabel26.setText(IdiomaESP.tRural);
 
-    jLabel34.setText(IdiomaESP.lbTitulo);
+    jLabel34.setText(Herramientas.obligatorio(IdiomaESP.lbTitulo));
+
+    RestrictedTextField rdTitulo = new RestrictedTextField(jtxtTitulo);
+    rdTitulo.setAcceptSpace(true);
+    rdTitulo.setOnlyText(true);
+    rdTitulo.setLimit(45);
+    jtxtTitulo.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtTituloActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
@@ -554,7 +606,7 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
                 .addComponent(jtxtUniversidadEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jLabel21))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jdFechaEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jLabel22))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -602,19 +654,52 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
 
     jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(IdiomaESP.tDatosContacto));
 
-    jLabel27.setText(IdiomaESP.lbResidencia);
+    jLabel27.setText(Herramientas.obligatorio(IdiomaESP.lbResidencia));
+
+    RestrictedTextField rdResidencia = new RestrictedTextField(jtxtResidencia);
+    rdResidencia.setLimit(45);
+    rdResidencia.setOnlyText(true);
 
     jLabel28.setText(IdiomaESP.lbDireccion);
 
-    jLabel29.setText(IdiomaESP.lbTelfono);
+    RestrictedTextField rdDirResidencia = new RestrictedTextField(jtxtDireccionResidencia);
+    rdDirResidencia.setLimit(100);
+    rdDirResidencia.setAcceptSpace(true);
+    rdDirResidencia.setOnlyAlphaNumeric(true);
+
+    jLabel29.setText(Herramientas.obligatorio(IdiomaESP.lbTelfono));
+
+    RestrictedTextField rdtelres = new RestrictedTextField(jtxtTelefonoResidencia);
+    rdtelres.setLimit(15);
+    rdtelres.setAcceptCharacters("-0123456789-");
+    rdtelres.setOnlyCustomCharacters(true);
 
     jLabel30.setText(IdiomaESP.lbDireccionConsul);
 
+    RestrictedTextField rdDirCon = new RestrictedTextField(jtxtDireccionConsultorio);
+    rdDirCon.setLimit(120);
+    rdDirCon.setAcceptSpace(true);
+    rdDirCon.setOnlyAlphaNumeric(true);
+
     jLabel31.setText(IdiomaESP.lbTelfono);
+
+    RestrictedTextField rdTelCon = new RestrictedTextField(jtxtTelefonoConsultorio);
+    rdTelCon.setLimit(15);
+    rdTelCon.setAcceptCharacters("0123456789--");
+    rdTelCon.setOnlyCustomCharacters(true);
 
     jLabel32.setText(IdiomaESP.lbCorreo);
 
-    jLabel33.setText(IdiomaESP.lbCelular);
+    RestrictedTextField rdemail = new RestrictedTextField(jtxtemail);
+    rdemail.setLimit(100);
+    rdemail.setOnlyAlphaNumeric(true);
+
+    jLabel33.setText(Herramientas.obligatorio(IdiomaESP.lbCelular));
+
+    RestrictedTextField rdCelular = new RestrictedTextField(jtxtCelular);
+    rdCelular.setLimit(15);
+    rdCelular.setAcceptCharacters("0123456789--");
+    rdCelular.setOnlyCustomCharacters(true);
 
     javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
     jPanel4.setLayout(jPanel4Layout);
@@ -676,6 +761,34 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
+    jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(IdiomaESP.tEstadoSocio));
+
+    jLabel1.setText(Herramientas.obligatorio(IdiomaESP.tEstadoSocio));
+
+    jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-"+IdiomaESP.lbOpcSeleccionar+"-",
+        IdiomaESP.lbOpActivo,IdiomaESP.lbOpInactivo}));
+
+javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+jPanel5.setLayout(jPanel5Layout);
+jPanel5Layout.setHorizontalGroup(
+jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+.addGroup(jPanel5Layout.createSequentialGroup()
+    .addContainerGap()
+    .addComponent(jLabel1)
+    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+    .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+    .addContainerGap())
+    );
+    jPanel5Layout.setVerticalGroup(
+        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel5Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1)
+                .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -688,7 +801,9 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
@@ -703,7 +818,10 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
     );
@@ -715,14 +833,12 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
         String url = "";
         JFileChooser jfc = new JFileChooser();
         if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File f = jfc.getSelectedFile();
             try {
-                imagen = ImageIO.read(f);
-                jlbImagen.setIcon(new ImageIcon(imagen.getScaledInstance(jlbImagen.getWidth(), jlbImagen.getHeight(), Image.SCALE_AREA_AVERAGING)));
+                imagen = Herramientas.toByte(jfc.getSelectedFile());
+                jlbImagen.setIcon(new ImageIcon(herramientas.Herramientas.toImage(imagen).getScaledInstance(jlbImagen.getWidth(), jlbImagen.getHeight(), Image.SCALE_AREA_AVERAGING)));
             } catch (IOException ex) {
                 Logger.getLogger(jdNuevoSocio.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -739,12 +855,16 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
 
     private void jcEstadoCivil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcEstadoCivil1ActionPerformed
 
-          jLabel13.setText(jcEstadoCivil1.getSelectedIndex()==2?Herramientas.obligatorio(IdiomaESP.lbNombreConyuge):IdiomaESP.lbNombreConyuge);
+        jLabel13.setText(jcEstadoCivil1.getSelectedIndex() == 2 ? Herramientas.obligatorio(IdiomaESP.lbNombreConyuge) : IdiomaESP.lbNombreConyuge);
     }//GEN-LAST:event_jcEstadoCivil1ActionPerformed
 
     private void jdFechaNacOnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_jdFechaNacOnSelectionChange
         // TODO add your handling code here:
     }//GEN-LAST:event_jdFechaNacOnSelectionChange
+
+    private void jtxtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtTituloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -793,6 +913,7 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -831,8 +952,10 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> jcEstadoCivil1;
+    private javax.swing.JComboBox<String> jcbEstado;
     private javax.swing.JComboBox<String> jcbGrupoSanguineo;
     private datechooser.beans.DateChooserCombo jdFechaEspecialidad;
     private datechooser.beans.DateChooserCombo jdFechaGraduacion;
