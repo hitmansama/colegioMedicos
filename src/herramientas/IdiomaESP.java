@@ -42,6 +42,8 @@ public final class IdiomaESP {
     public final static String mMiCuentaActualizada = "Se actualizó con éxito la cuenta";
     public final static String mErMiCuentaGuardar = "No se pudo actualizar la cuenta.";
     public final static String mGuardarNuevoSocio = "Nuevo Socio Guardado correctamente";
+    public final static String mEditarSocio  = "Socio actualizado correctamente";
+    public final static String mErEditarSocio = "No se pudo actualizar socio";
     public final static String mErGuardarNuevoSocio = "No se pudo guardar el nuevo socio";
     public final static String tGuardarSocio = "Guardar socio";
     public final static String mErCodigoDupSocio ="Codigo de socio duplicado";

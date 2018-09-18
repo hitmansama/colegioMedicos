@@ -36,8 +36,9 @@ public class jdEditarSocio extends javax.swing.JDialog {
     private Socio socio;
     Dimension dImagen = null;
 
-    public jdEditarSocio(java.awt.Frame parent, boolean modal,Socio _socio) {
+    public jdEditarSocio(java.awt.Frame parent, boolean modal, Socio _socio) {
         super(parent, modal);
+        socio = _socio;
         initComponents();
         this.setTitle(IdiomaESP.tNuevoSocio);
         Herramientas.VentanaCentroWindows(this);
@@ -46,16 +47,139 @@ public class jdEditarSocio extends javax.swing.JDialog {
         jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
         jdFechaNac.setText("");
         dImagen = new Dimension(jlbImagen.getWidth(), jlbImagen.getHeight());
-        socio = _socio;
-        vaciarCampos();
         pasarDatos();
+
     }
 
-    public boolean vacio(JTextField _texto) {
-
-        return _texto.getText().trim().isEmpty();
+    public void actualizarCodigo() {
+        if (!jtxtCodigo.getText().equals(socio.getCodigo())) {
+            if (!jtxtCodigo.getText().trim().isEmpty()) {
+                if (hSocio.codigoDublicado(jtxtCodigo.getText())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mErCodigoDupSocio, IdiomaESP.tGuardarSocio);
+                    jtxtCodigo.setText(socio.getCodigo());
+                    return;
+                }
+                socio.setCodigo(jtxtCodigo.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeInfo(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtCodigo.setText(hSocio.obtenerSocio(socio.getId()).getCodigo());
+                }
+            } else {
+                jtxtCodigo.setText(socio.getCodigo());
+            }
+        }
     }
-    public void pasarDatos(){
+
+    public void actualizarCedula() {
+        if (!jtxtCedula.getText().equals(socio.getCedula())) {
+            if (!jtxtCedula.getText().trim().isEmpty()) {
+                if (hSocio.cedulaDublicado(jtxtCedula.getText())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mErCedulaDupSocio, IdiomaESP.tGuardarSocio);
+                    jtxtCedula.setText(socio.getCedula());
+                    return;
+                }
+                socio.setCedula(jtxtCedula.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtCedula.setText(hSocio.obtenerSocio(socio.getId()).getCedula());
+                }
+            } else {
+                jtxtCedula.setText(socio.getCedula());
+            }
+        }
+    }
+
+    public void actualizarNombres() {
+        if (!jtxtNombres.getText().trim().isEmpty()) {
+            if (!jtxtNombres.getText().equals(socio.getNombres())) {
+                socio.setNombres(jtxtNombres.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtNombres.setText(hSocio.obtenerSocio(socio.getId()).getNombres());
+                }
+            }
+        } else {
+            jtxtNombres.setText(socio.getNombres());
+        }
+    }
+
+    public void actualizarApPat() {
+        if (!jtxtApPat.getText().trim().isEmpty()) {
+            if (!jtxtApPat.getText().equals(socio.getApellidoPaterno())) {
+                socio.setApellidoPaterno(jtxtApPat.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtApPat.setText(hSocio.obtenerSocio(socio.getId()).getApellidoPaterno());
+                }
+            }
+        } else {
+            jtxtApPat.setText(socio.getApellidoPaterno());
+        }
+    }
+
+    public void actualizarFechaNac() {
+        SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yy");
+        if (jdFechaNac.getSelectedDate() != null) {
+            if (!jdFechaNac.getSelectedDate().getTime().equals(socio.getFechaNacimiento())) {
+                socio.setFechaNacimiento(jdFechaNac.getSelectedDate().getTime());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    jdFechaNac.setText(sp.format(socio.getFechaNacimiento()));
+                    Herramientas.MensajeAdv(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jdFechaNac.setText(sp.format(hSocio.obtenerSocio(socio.getId()).getFechaNacimiento()));
+                }
+            }
+        } else {
+            jdFechaNac.setText(sp.format(socio.getFechaNacimiento()));
+        }
+    }
+
+    public void actualizarPais() {
+        if (!jtxtPais.getText().equals(socio.getPais())) {
+            socio.setPais(jtxtPais.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtPais.setText(hSocio.obtenerSocio(socio.getId()).getPais());
+            }
+        }
+    }
+
+    public void actualizarProvincia() {
+        if (!jtxtProvincia.getText().equals(socio.getProvincia())) {
+            socio.setProvincia(jtxtProvincia.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtProvincia.setText(hSocio.obtenerSocio(socio.getId()).getProvincia());
+            }
+        }
+    }
+
+    public void actualizarCiudad() {
+        if (!jtxtCiudad.getText().equals(socio.getCiudad())) {
+            socio.setCiudad(jtxtCiudad.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtCiudad.setText(hSocio.obtenerSocio(socio.getId()).getCiudad());
+            }
+        }
+    }
+
+    public void pasarDatos() {
         jtxtApMat.setText(socio.getApellidoMaterno());
         jtxtApPat.setText(socio.getApellidoPaterno());
         jtxtCedula.setText(socio.getCedula());
@@ -82,113 +206,13 @@ public class jdEditarSocio extends javax.swing.JDialog {
         jtxtUniversidadGraduado.setText(socio.getGraduacionUni());
         jtxtemail.setText(socio.getEmail());
         jcEstadoCivil1.setSelectedItem(socio.getEstadoCivil());
-        jcbEstado.setSelectedIndex(socio.getEstadoSocio().equals("a")?1:2);
+        jcbEstado.setSelectedIndex(socio.getEstadoSocio().equals("a") ? 1 : 2);
         jcbGrupoSanguineo.setSelectedItem(socio.getGrupoSanguineo());
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yy");
-        jdFechaEspecialidad.setText(socio.getFechaEsp()!=null?sf.format(socio.getFechaEsp()):"");
+        jdFechaEspecialidad.setText(socio.getFechaEsp() != null ? sf.format(socio.getFechaEsp()) : "");
         jdFechaGraduacion.setText(sf.format(socio.getFehaGrad()));
         jdFechaNac.setText(sf.format(socio.getFechaNacimiento()));
         jdFechaRural.setText(sf.format(socio.getFechaRural()));
-        
-    }
-   
-
-    public void vaciarCampos() {
-        jtxtCodigo.setText("");
-        jtxtApMat.setText("");
-        jtxtApPat.setText("");
-        jtxtCedula.setText("");
-        jtxtCelular.setText("");
-        jtxtCiudad.setText("");
-        jtxtDireccionConsultorio.setText("");
-        jtxtDireccionResidencia.setText("");
-        jtxtEspacialidad.setText("");
-        jtxtFolio.setText("");
-        jtxtInscripcionSanitaria.setText("");
-        jtxtLibro.setText("");
-        jtxtFolio.setText("");
-        jtxtLugarGraduacion.setText("");
-        jtxtNombreConyugue.setText("");
-        jtxtNombres.setText("");
-        jtxtPais.setText("");
-        jtxtProvincia.setText("");
-        jtxtResidencia.setText("");
-        jtxtRural.setText("");
-        jtxtTelefonoConsultorio.setText("");
-        jtxtTelefonoResidencia.setText("");
-        jtxtTitulo.setText("");
-        jtxtUniversidadEspecialidad.setText("");
-        jtxtUniversidadGraduado.setText("");
-        jtxtemail.setText("");
-        jcEstadoCivil1.setSelectedIndex(0);
-        jcbEstado.setSelectedIndex(0);
-        jcbGrupoSanguineo.setSelectedIndex(0);
-        jdFechaEspecialidad.setSelectedDate(null);
-        jdFechaEspecialidad.setText("");
-        jdFechaGraduacion.setSelectedDate(null);
-        jdFechaGraduacion.setText("");
-        jdFechaNac.setSelectedDate(null);
-        jdFechaNac.setText("");
-        jdFechaRural.setSelectedDate(null);
-        jdFechaRural.setText("");
-        imagen = null;
-        jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", dImagen.width, dImagen.height));
-        jtxtCodigo.requestFocus();
-    }
-
-    public void guardar() {
-        if(hSocio.codigoDublicado(jtxtCodigo.getText())){
-            Herramientas.MensajeErr(IdiomaESP.mErCodigoDupSocio,IdiomaESP.tGuardarSocio);
-            return;
-        }
-        if(hSocio.cedulaDublicado(jtxtCedula.getText())){
-            Herramientas.MensajeErr(IdiomaESP.mErCedulaDupSocio,IdiomaESP.tGuardarSocio);
-            return;
-        }
-        datosPersonales datos = new datosPersonales();
-        datosEstudios estudios = new datosEstudios();
-        datosContacto contacto = new datosContacto();
-
-        datos.setApellidosMaternos(jtxtApMat.getText());
-        datos.setApellidosPaternos(jtxtApPat.getText());
-        datos.setCedula(jtxtCedula.getText());
-        datos.setCiudad(jtxtCiudad.getText());
-        datos.setCodigo(jtxtCodigo.getText());
-        datos.setConyuge(jtxtNombreConyugue.getText());
-        datos.setEstadoCivil(jcEstadoCivil1.getSelectedItem().toString());
-        datos.setFechaNacimiento(jdFechaNac.getSelectedDate().getTime());
-        datos.setGrupoSanguineo(jcbGrupoSanguineo.getSelectedItem().toString());
-        datos.setNombres(jtxtNombres.getText());
-        datos.setPais(jtxtPais.getText());
-        datos.setProvincia(jtxtProvincia.getText());
-
-        estudios.setUniversidadGraduacion(jtxtUniversidadGraduado.getText());
-        estudios.setTituloGraduacion(jtxtTitulo.getText());
-        estudios.setFechaGraduacion(jdFechaGraduacion.getSelectedDate().getTime());
-        estudios.setLugarGraduacion(jtxtLugarGraduacion.getText());
-        estudios.setLibro(jtxtLibro.getText());
-        estudios.setFolio(jtxtFolio.getText());
-        estudios.setInscripcionSanitaria(jtxtInscripcionSanitaria.getText());
-        estudios.setUniversidadEspecialidad(jtxtUniversidadEspecialidad.getText());
-        estudios.setTituloEspecialidad(jtxtEspacialidad.getText());
-        estudios.setFechaEspecialidad(jdFechaEspecialidad.getSelectedDate()!=null?jdFechaEspecialidad.getSelectedDate().getTime():null);
-        estudios.setMedicaturaRural(jtxtRural.getText());
-        estudios.setFechaRural(jdFechaRural.getSelectedDate().getTime());
-
-        contacto.setCelular(jtxtCelular.getText());
-        contacto.setConsultorio(jtxtDireccionConsultorio.getText());
-        contacto.setDireccion(jtxtDireccionResidencia.getText());
-        contacto.setEmail(jtxtemail.getText());
-        contacto.setResidencia(jtxtResidencia.getText());
-        contacto.setTelefono(jtxtTelefonoResidencia.getText());
-        contacto.setTelfonoConsultorio(jtxtTelefonoConsultorio.getText());
-
-        if (true) {
-            Herramientas.MensajeInfo(IdiomaESP.mGuardarNuevoSocio, IdiomaESP.tGuardarSocio);
-            vaciarCampos();
-        } else {
-            Herramientas.MensajeErr(IdiomaESP.mErGuardarNuevoSocio, IdiomaESP.tGuardarSocio);
-        }
     }
 
     /**
@@ -285,11 +309,21 @@ public class jdEditarSocio extends javax.swing.JDialog {
         rtCodigo.setAcceptSpace(false);
         rtCodigo.setLimit(5);
         rtCodigo.setOnlyNums(true);
+        jtxtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtCodigoActionPerformed(evt);
+            }
+        });
 
         RestrictedTextField rtCedula = new RestrictedTextField(jtxtCedula);
         rtCedula.setLimit(11);
         rtCedula.setOnlyNums(true);
         rtCedula.setAcceptSpace(false);
+        jtxtCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtCedulaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText(Herramientas.obligatorio(IdiomaESP.lCodigo));
 
@@ -301,12 +335,22 @@ public class jdEditarSocio extends javax.swing.JDialog {
         rdNombres.setLimit(100);
         rdNombres.setOnlyText(true);
         rdNombres.setAcceptSpace(true);
+        jtxtNombres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtNombresActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText(Herramientas.obligatorio(IdiomaESP.lbApelPat));
 
         RestrictedTextField rdApPat = new RestrictedTextField(jtxtApPat);
         rdApPat.setLimit(45);
         rdApPat.setOnlyText(true);
+        jtxtApPat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtApPatActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText(Herramientas.obligatorio(IdiomaESP.lbApelMat));
 
@@ -358,24 +402,44 @@ public class jdEditarSocio extends javax.swing.JDialog {
                 false,
                 true)));
     jdFechaNac.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
+    jdFechaNac.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
+        public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
+            jdFechaNacOnSelectionChange(evt);
+        }
+    });
 
     jLabel9.setText(IdiomaESP.lbPais);
 
     RestrictedTextField rdPais = new RestrictedTextField(jtxtPais);
     rdPais.setOnlyText(true);
     rdPais.setLimit(45);
+    jtxtPais.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtPaisActionPerformed(evt);
+        }
+    });
 
     jLabel10.setText(IdiomaESP.lbProv);
 
     RestrictedTextField rdProvincia = new RestrictedTextField(jtxtProvincia);
     rdProvincia.setOnlyText(true);
     rdProvincia.setLimit(45);
+    jtxtProvincia.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtProvinciaActionPerformed(evt);
+        }
+    });
 
     jLabel11.setText(IdiomaESP.lbCiudad);
 
     RestrictedTextField rdCiudad = new RestrictedTextField(jtxtCiudad);
     rdCiudad.setOnlyText(true);
     rdCiudad.setLimit(45);
+    jtxtCiudad.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtCiudadActionPerformed(evt);
+        }
+    });
 
     jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -398,19 +462,17 @@ public class jdEditarSocio extends javax.swing.JDialog {
 
     jLabel12.setText(Herramientas.obligatorio(IdiomaESP.lbSangre));
 
-    jcbGrupoSanguineo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-"+IdiomaESP.lbOpcSeleccionar+"-",
-        "A+","A-","B+","B-","AB+","AB-","O+","O-"}));
+    jcbGrupoSanguineo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"A+","A-","B+","B-","AB+","AB-","O+","O-"}));
 
-jLabel13.setText(IdiomaESP.lbNombreConyuge);
+    jLabel13.setText(IdiomaESP.lbNombreConyuge);
 
-jLabel35.setText(Herramientas.obligatorio(IdiomaESP.lbEstadoCiv));
+    jLabel35.setText(Herramientas.obligatorio(IdiomaESP.lbEstadoCiv));
 
-jcEstadoCivil1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-"+IdiomaESP.lbOpcSeleccionar+"-",
-IdiomaESP.lbOpcSoltero,IdiomaESP.lbOpcCasado,IdiomaESP.lbOpcDivorciado,IdiomaESP.lbOpcViudo }));
-jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jcEstadoCivil1ActionPerformed(evt);
-    }
+    jcEstadoCivil1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {IdiomaESP.lbOpcSoltero,IdiomaESP.lbOpcCasado,IdiomaESP.lbOpcDivorciado,IdiomaESP.lbOpcViudo }));
+    jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jcEstadoCivil1ActionPerformed(evt);
+        }
     });
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -740,8 +802,7 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
 
     RestrictedTextField rdtelres = new RestrictedTextField(jtxtTelefonoResidencia);
     rdtelres.setLimit(15);
-    rdtelres.setAcceptCharacters("-0123456789-");
-    rdtelres.setOnlyCustomCharacters(true);
+    rdtelres.setOnlyNums(true);
 
     jLabel30.setText(IdiomaESP.lbDireccionConsul);
 
@@ -754,8 +815,7 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
 
     RestrictedTextField rdTelCon = new RestrictedTextField(jtxtTelefonoConsultorio);
     rdTelCon.setLimit(15);
-    rdTelCon.setAcceptCharacters("0123456789--");
-    rdTelCon.setOnlyCustomCharacters(true);
+    rdTelCon.setOnlyNums(true);
     jtxtTelefonoConsultorio.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jtxtTelefonoConsultorioActionPerformed(evt);
@@ -771,6 +831,7 @@ jcEstadoCivil1.addActionListener(new java.awt.event.ActionListener() {
 
     RestrictedTextField rdCelular = new RestrictedTextField(jtxtCelular);
     rdCelular.setLimit(15);
+    rdCelular.setOnlyNums(true);
 
     javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
     jPanel4.setLayout(jPanel4Layout);
@@ -915,7 +976,6 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      vaciarCampos();
         pasarDatos();
         imagen = null;
         jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", dImagen.width, dImagen.height));
@@ -933,6 +993,42 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     private void jtxtTelefonoConsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTelefonoConsultorioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtTelefonoConsultorioActionPerformed
+
+    private void jtxtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCodigoActionPerformed
+        actualizarCodigo();
+    }//GEN-LAST:event_jtxtCodigoActionPerformed
+
+    private void jtxtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCedulaActionPerformed
+        actualizarCedula();
+    }//GEN-LAST:event_jtxtCedulaActionPerformed
+
+    private void jtxtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNombresActionPerformed
+        actualizarNombres();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtNombresActionPerformed
+
+    private void jtxtApPatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtApPatActionPerformed
+        actualizarApPat();
+    }//GEN-LAST:event_jtxtApPatActionPerformed
+
+    private void jtxtPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtPaisActionPerformed
+        actualizarPais();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtPaisActionPerformed
+
+    private void jdFechaNacOnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_jdFechaNacOnSelectionChange
+        actualizarFechaNac();
+    }//GEN-LAST:event_jdFechaNacOnSelectionChange
+
+    private void jtxtProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtProvinciaActionPerformed
+actualizarProvincia();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtProvinciaActionPerformed
+
+    private void jtxtCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCiudadActionPerformed
+actualizarCiudad();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtCiudadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -965,7 +1061,7 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                jdEditarSocio dialog = new jdEditarSocio(new javax.swing.JFrame(), true,new Socio());
+                jdEditarSocio dialog = new jdEditarSocio(new javax.swing.JFrame(), true, new Socio());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

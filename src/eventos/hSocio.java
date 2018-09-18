@@ -17,16 +17,16 @@ import org.hibernate.Transaction;
 import pojos.Socio;
 
 public class hSocio {
-
+    
     public hSocio() {
-
+        
     }
-
+    
     public static class datosPersonales {
-
+        
         public datosPersonales() {
         }
-
+        
         public datosPersonales(String codigo, String nombres, String apellidosPaternos, String apellidosMaternos, String cedula, Date fechaNacimiento, String pais, String ciudad, String provincia, String estadoCivil, String conyuge, Image foto, String grupoSanguineo) {
             this.codigo = codigo;
             this.nombres = nombres;
@@ -41,9 +41,9 @@ public class hSocio {
             this.conyuge = conyuge;
             this.foto = foto;
             this.grupoSanguineo = grupoSanguineo;
-
+            
         }
-
+        
         public datosPersonales(String codigo, String nombres, String apellidosPaternos, String apellidosMaternos, String cedula, Date fechaNacimiento, String pais, String ciudad, String provincia, String estadoCivil, String conyuge, String grupoSanguineo) {
             this.codigo = codigo;
             this.nombres = nombres;
@@ -58,7 +58,7 @@ public class hSocio {
             this.conyuge = conyuge;
             this.grupoSanguineo = grupoSanguineo;
         }
-
+        
         private String codigo;
         private String nombres;
         private String apellidosPaternos;
@@ -72,115 +72,115 @@ public class hSocio {
         private String conyuge;
         private Image foto;
         private String grupoSanguineo;
-
+        
         public String getGrupoSanguineo() {
             return grupoSanguineo;
         }
-
+        
         public void setGrupoSanguineo(String grupoSanguineo) {
             this.grupoSanguineo = grupoSanguineo;
         }
-
+        
         public Image getFoto() {
             return foto;
         }
-
+        
         public void setFoto(Image foto) {
             this.foto = foto;
         }
-
+        
         public String getCodigo() {
             return codigo;
         }
-
+        
         public void setCodigo(String codigo) {
             this.codigo = codigo;
         }
-
+        
         public String getNombres() {
             return nombres;
         }
-
+        
         public void setNombres(String nombres) {
             this.nombres = nombres;
         }
-
+        
         public String getApellidosPaternos() {
             return apellidosPaternos;
         }
-
+        
         public void setApellidosPaternos(String apellidosPaternos) {
             this.apellidosPaternos = apellidosPaternos;
         }
-
+        
         public String getApellidosMaternos() {
             return apellidosMaternos;
         }
-
+        
         public void setApellidosMaternos(String apellidosMaternos) {
             this.apellidosMaternos = apellidosMaternos;
         }
-
+        
         public String getCedula() {
             return cedula;
         }
-
+        
         public void setCedula(String cedula) {
             this.cedula = cedula;
         }
-
+        
         public Date getFechaNacimiento() {
             return fechaNacimiento;
         }
-
+        
         public void setFechaNacimiento(Date fechaNacimiento) {
             this.fechaNacimiento = fechaNacimiento;
         }
-
+        
         public String getPais() {
             return pais;
         }
-
+        
         public void setPais(String pais) {
             this.pais = pais;
         }
-
+        
         public String getCiudad() {
             return ciudad;
         }
-
+        
         public void setCiudad(String ciudad) {
             this.ciudad = ciudad;
         }
-
+        
         public String getProvincia() {
             return provincia;
         }
-
+        
         public void setProvincia(String provincia) {
             this.provincia = provincia;
         }
-
+        
         public String getEstadoCivil() {
             return estadoCivil;
         }
-
+        
         public void setEstadoCivil(String estadoCivil) {
             this.estadoCivil = estadoCivil;
         }
-
+        
         public String getConyuge() {
             return conyuge;
         }
-
+        
         public void setConyuge(String conyuge) {
             this.conyuge = conyuge;
         }
-
+        
     }
-
+    
     public static class datosEstudios {
-
+        
         private String universidadGraduacion;
         private String tituloGraduacion;
         private String inscripcionSanitaria;
@@ -193,7 +193,7 @@ public class hSocio {
         private Date fechaEspecialidad;
         private String medicaturaRural;
         private Date fechaRural;
-
+        
         public datosEstudios(String universidadGraduacion, String tituloGraduacion, String inscripcionSanitaria, String libro, String folio, String lugarGraduacion, Date fechaGraduacion, String tituloEspecialidad, String universidadEspecialidad, Date fechaEspecialidad, String medicaturaRural, Date fechaRural) {
             this.universidadGraduacion = universidadGraduacion;
             this.tituloGraduacion = tituloGraduacion;
@@ -208,110 +208,110 @@ public class hSocio {
             this.medicaturaRural = medicaturaRural;
             this.fechaRural = fechaRural;
         }
-
+        
         public datosEstudios() {
         }
-
+        
         public String getUniversidadGraduacion() {
             return universidadGraduacion;
         }
-
+        
         public void setUniversidadGraduacion(String universidadGraduacion) {
             this.universidadGraduacion = universidadGraduacion;
         }
-
+        
         public String getTituloGraduacion() {
             return tituloGraduacion;
         }
-
+        
         public void setTituloGraduacion(String tituloGraduacion) {
             this.tituloGraduacion = tituloGraduacion;
         }
-
+        
         public String getInscripcionSanitaria() {
             return inscripcionSanitaria;
         }
-
+        
         public void setInscripcionSanitaria(String inscripcionSanitaria) {
             this.inscripcionSanitaria = inscripcionSanitaria;
         }
-
+        
         public String getLibro() {
             return libro;
         }
-
+        
         public void setLibro(String libro) {
             this.libro = libro;
         }
-
+        
         public String getFolio() {
             return folio;
         }
-
+        
         public void setFolio(String folio) {
             this.folio = folio;
         }
-
+        
         public String getLugarGraduacion() {
             return lugarGraduacion;
         }
-
+        
         public void setLugarGraduacion(String lugarGraduacion) {
             this.lugarGraduacion = lugarGraduacion;
         }
-
+        
         public Date getFechaGraduacion() {
             return fechaGraduacion;
         }
-
+        
         public void setFechaGraduacion(Date fechaGraduacion) {
             this.fechaGraduacion = fechaGraduacion;
         }
-
+        
         public String getTituloEspecialidad() {
             return tituloEspecialidad;
         }
-
+        
         public void setTituloEspecialidad(String tituloEspecialidad) {
             this.tituloEspecialidad = tituloEspecialidad;
         }
-
+        
         public String getUniversidadEspecialidad() {
             return universidadEspecialidad;
         }
-
+        
         public void setUniversidadEspecialidad(String universidadEspecialidad) {
             this.universidadEspecialidad = universidadEspecialidad;
         }
-
+        
         public Date getFechaEspecialidad() {
             return fechaEspecialidad;
         }
-
+        
         public void setFechaEspecialidad(Date fechaEspecialidad) {
             this.fechaEspecialidad = fechaEspecialidad;
         }
-
+        
         public String getMedicaturaRural() {
             return medicaturaRural;
         }
-
+        
         public void setMedicaturaRural(String medicaturaRural) {
             this.medicaturaRural = medicaturaRural;
         }
-
+        
         public Date getFechaRural() {
             return fechaRural;
         }
-
+        
         public void setFechaRural(Date fechaRural) {
             this.fechaRural = fechaRural;
         }
-
+        
     }
-
+    
     public static class datosContacto {
-
+        
         private String residencia;
         private String direccion;
         private String telefono;
@@ -319,7 +319,7 @@ public class hSocio {
         private String telfonoConsultorio;
         private String email;
         private String celular;
-
+        
         public datosContacto(String residencia, String direccion, String telefono, String consultorio, String telfonoConsultorio, String email, String celular) {
             this.residencia = residencia;
             this.direccion = direccion;
@@ -329,68 +329,68 @@ public class hSocio {
             this.email = email;
             this.celular = celular;
         }
-
+        
         public datosContacto() {
         }
-
+        
         public String getResidencia() {
             return residencia;
         }
-
+        
         public void setResidencia(String residencia) {
             this.residencia = residencia;
         }
-
+        
         public String getDireccion() {
             return direccion;
         }
-
+        
         public void setDireccion(String direccion) {
             this.direccion = direccion;
         }
-
+        
         public String getTelefono() {
             return telefono;
         }
-
+        
         public void setTelefono(String telefono) {
             this.telefono = telefono;
         }
-
+        
         public String getConsultorio() {
             return consultorio;
         }
-
+        
         public void setConsultorio(String consultorio) {
             this.consultorio = consultorio;
         }
-
+        
         public String getTelfonoConsultorio() {
             return telfonoConsultorio;
         }
-
+        
         public void setTelfonoConsultorio(String telfonoConsultorio) {
             this.telfonoConsultorio = telfonoConsultorio;
         }
-
+        
         public String getEmail() {
             return email;
         }
-
+        
         public void setEmail(String email) {
             this.email = email;
         }
-
+        
         public String getCelular() {
             return celular;
         }
-
+        
         public void setCelular(String celular) {
             this.celular = celular;
         }
-
+        
     }
-
+    
     public static List<Socio> obtenerSocios() {
         SessionFactory sf = HibernateUtil.abrirConexion();
         List<Socio> l = null;
@@ -400,7 +400,7 @@ public class hSocio {
         HibernateUtil.cerrarSesion(sf);
         return l;
     }
-
+    
     public static boolean codigoDublicado(String _codigo) {
         SessionFactory sf = HibernateUtil.abrirConexion();
         List<Socio> l = null;
@@ -411,7 +411,7 @@ public class hSocio {
         HibernateUtil.cerrarSesion(sf);
         return aux != null;
     }
-
+    
     public static boolean cedulaDublicado(String _cedula) {
         SessionFactory sf = HibernateUtil.abrirConexion();
         List<Socio> l = null;
@@ -423,10 +423,19 @@ public class hSocio {
         return aux != null;
     }
 
-    public static boolean guardarSocioEditar(Socio _socio,int _id) {
+    public static Socio obtenerSocio(int _id) {
         SessionFactory sf = HibernateUtil.abrirConexion();
-        Session session = sf.getCurrentSession();
-        Socio auxSocio =  (Socio) session.get(Socio.class,_id);
+        Session session = sf.openSession();
+        Socio auxSocio = (Socio) session.get(Socio.class, _id);
+        HibernateUtil.cerrarSesion(sf);
+        return auxSocio;
+    }
+
+    public static boolean guardarSocioEditar(Socio _socio, int _id) {
+        SessionFactory sf = HibernateUtil.abrirConexion();
+        Session session = sf.openSession();
+        Transaction tx = session.beginTransaction();
+        Socio auxSocio = (Socio) session.get(Socio.class, _id);
         auxSocio.setCodigo(_socio.getCodigo());
         auxSocio.setCedula(_socio.getCedula());
         auxSocio.setNombres(_socio.getNombres());
@@ -460,7 +469,6 @@ public class hSocio {
         auxSocio.setTelfCelular(_socio.getTelfCelular());
         auxSocio.setEstadoSocio(_socio.getEstadoSocio());
         auxSocio.setFotoAsociado(_socio.getFotoAsociado());
-        Transaction tx = session.beginTransaction();
         try {
             session.merge(_socio);
             tx.commit();
@@ -471,7 +479,7 @@ public class hSocio {
         }
         return false;
     }
-
+    
     public static boolean guardarSocioNuevo(datosPersonales _datosPersonales, datosEstudios _datosEstudios, datosContacto _datosContacto, String _estado, String _lugar, Date _fechaCreacion, byte[] _imagen) {
         Socio socio = new Socio();
         socio.setCodigo(_datosPersonales.getCodigo());
@@ -522,5 +530,5 @@ public class hSocio {
         }
         return false;
     }
-
+    
 }
