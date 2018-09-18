@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
+import net.sf.ehcache.hibernate.management.api.HibernateStats;
 import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -408,9 +409,10 @@ public class hSocio {
         hq.setParameter("_codigo", _codigo);
         Socio aux = (Socio) hq.uniqueResult();
         HibernateUtil.cerrarSesion(sf);
-        return aux!=null;
+        return aux != null;
     }
-     public static boolean cedulaDublicado(String _cedula) {
+
+    public static boolean cedulaDublicado(String _cedula) {
         SessionFactory sf = HibernateUtil.abrirConexion();
         List<Socio> l = null;
         Session session = sf.openSession();
@@ -418,54 +420,53 @@ public class hSocio {
         hq.setParameter("_cedula", _cedula);
         Socio aux = (Socio) hq.uniqueResult();
         HibernateUtil.cerrarSesion(sf);
-        return aux!=null;
+        return aux != null;
     }
 
-    public static boolean guardarSocioNuevo(datosPersonales _datosPersonales, datosEstudios _datosEstudios, datosContacto _datosContacto, String _estado, String _lugar, Date _fechaCreacion) {
-        Socio socio = new Socio();
-        socio.setCodigo(_datosPersonales.getCodigo());
-        socio.setCedula(_datosPersonales.getCedula());
-        socio.setNombres(_datosPersonales.getNombres());
-        socio.setApellidoPaterno(_datosPersonales.getApellidosPaternos());
-        socio.setApellidoMaterno(_datosPersonales.getApellidosMaternos());
-        socio.setFechaNacimiento(_datosPersonales.getFechaNacimiento());
-        socio.setPais(_datosPersonales.getPais());
-        socio.setProvincia(_datosPersonales.getProvincia());
-        socio.setCiudad(_datosPersonales.getCiudad());
-        socio.setEstadoCivil(_datosPersonales.getEstadoCivil());
-        socio.setNombresConyuge(_datosPersonales.getConyuge());
-        socio.setGrupoSanguineo(_datosPersonales.getGrupoSanguineo());
-        socio.setGraduacionUni(_datosEstudios.getUniversidadGraduacion());
-        socio.setTituloDe(_datosEstudios.getTituloGraduacion());
-        socio.setInscripcionSanitaria(_datosEstudios.getInscripcionSanitaria());
-        socio.setLibro(_datosEstudios.getLibro());
-        socio.setFolio(_datosEstudios.getFolio());
-        socio.setLugarGrad(_datosEstudios.getLugarGraduacion());
-        socio.setFehaGrad(_datosEstudios.getFechaGraduacion());
-        socio.setEspecialidad(_datosEstudios.getTituloEspecialidad());
-        socio.setUniversidadEsp(_datosEstudios.getUniversidadEspecialidad());
-        socio.setFechaEsp(_datosEstudios.fechaEspecialidad);
-        socio.setMedicaturaRural(_datosEstudios.getMedicaturaRural());
-        socio.setFechaRural(_datosEstudios.getFechaRural());
-        socio.setDireccionResidencia(_datosContacto.getDireccion());
-        socio.setLugarResidencia(_datosContacto.getResidencia());
-        socio.setTelfResidencia(_datosContacto.getTelefono());
-        socio.setDireccionConsultorio(_datosContacto.getConsultorio());
-        socio.setTelfConsultorio(_datosContacto.getTelfonoConsultorio());
-        socio.setEmail(_datosContacto.getEmail());
-        socio.setTelfCelular(_datosContacto.getCelular());
-        socio.setEstadoSocio(_estado);
-        socio.setLugarAfiliacion(_lugar);
-        socio.setFechaAfiliacion(_fechaCreacion);
+    public static boolean guardarSocioEditar(Socio _socio,int _id) {
         SessionFactory sf = HibernateUtil.abrirConexion();
         Session session = sf.getCurrentSession();
+        Socio auxSocio =  (Socio) session.get(Socio.class,_id);
+        auxSocio.setCodigo(_socio.getCodigo());
+        auxSocio.setCedula(_socio.getCedula());
+        auxSocio.setNombres(_socio.getNombres());
+        auxSocio.setApellidoPaterno(_socio.getApellidoPaterno());
+        auxSocio.setApellidoMaterno(_socio.getApellidoMaterno());
+        auxSocio.setFechaNacimiento(_socio.getFechaNacimiento());
+        auxSocio.setPais(_socio.getPais());
+        auxSocio.setProvincia(_socio.getProvincia());
+        auxSocio.setCiudad(_socio.getCiudad());
+        auxSocio.setEstadoCivil(_socio.getEstadoCivil());
+        auxSocio.setNombresConyuge(_socio.getNombresConyuge());
+        auxSocio.setGrupoSanguineo(_socio.getGrupoSanguineo());
+        auxSocio.setGraduacionUni(_socio.getGraduacionUni());
+        auxSocio.setTituloDe(_socio.getTituloDe());
+        auxSocio.setInscripcionSanitaria(_socio.getInscripcionSanitaria());
+        auxSocio.setLibro(_socio.getLibro());
+        auxSocio.setFolio(_socio.getFolio());
+        auxSocio.setLugarGrad(_socio.getLugarGrad());
+        auxSocio.setFehaGrad(_socio.getFehaGrad());
+        auxSocio.setEspecialidad(_socio.getTituloDe());
+        auxSocio.setUniversidadEsp(_socio.getUniversidadEsp());
+        auxSocio.setFechaEsp(_socio.getFechaEsp());
+        auxSocio.setMedicaturaRural(_socio.getMedicaturaRural());
+        auxSocio.setFechaRural(_socio.getFechaRural());
+        auxSocio.setDireccionResidencia(_socio.getDireccionResidencia());
+        auxSocio.setLugarResidencia(_socio.getLugarResidencia());
+        auxSocio.setTelfResidencia(_socio.getTelfResidencia());
+        auxSocio.setDireccionConsultorio(_socio.getDireccionConsultorio());
+        auxSocio.setTelfConsultorio(_socio.getTelfConsultorio());
+        auxSocio.setEmail(_socio.getEmail());
+        auxSocio.setTelfCelular(_socio.getTelfCelular());
+        auxSocio.setEstadoSocio(_socio.getEstadoSocio());
+        auxSocio.setFotoAsociado(_socio.getFotoAsociado());
         Transaction tx = session.beginTransaction();
         try {
-            session.save(socio);
+            session.merge(_socio);
             tx.commit();
             HibernateUtil.cerrarSesion(sf);
             return true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             tx.rollback();
         }
         return false;
