@@ -31,6 +31,7 @@ public final class IdiomaESP {
     public final static String Menu01Item01 = "Mi cuenta";
     public final static String Menu01Item02 = "Recuperar contraseña";
     public final static String Menu01Item03 = "SupAdmin Cuentas";
+    public final static String mErEditarEstadoCivil = "Debe llenar nombre conyugue para cambiar estado CASADO/A";
     //Ventana Mi Cuenta
     public final static String tMiCuenta = "Mi cuenta";
     public final static String lbNombres = "Nombres";

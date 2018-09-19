@@ -179,6 +179,63 @@ public class jdEditarSocio extends javax.swing.JDialog {
         }
     }
 
+    public void actualizarGrupoSanguine() {
+        if (!socio.getGrupoSanguineo().equals(jcbGrupoSanguineo.getSelectedItem().toString())) {
+            socio.setGrupoSanguineo(jcbGrupoSanguineo.getSelectedItem().toString());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jcbGrupoSanguineo.setSelectedItem(hSocio.obtenerSocio(socio.getId()).getGrupoSanguineo());
+            }
+        }
+    }
+
+    public void actualizarEstadoCivil() {
+        if (jcEstadoCivil1.getSelectedItem().toString().equals(socio.getEstadoCivil())) {
+            return;
+        }
+        if (!jcEstadoCivil1.getSelectedItem().toString().equals(IdiomaESP.lbOpcCasado)) {
+            jtxtNombreConyugue.setText("");
+            socio.setNombresConyuge("");
+            socio.setEstadoCivil(jcEstadoCivil1.getSelectedItem().toString());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                Socio aux = hSocio.obtenerSocio(socio.getId());
+                jtxtNombreConyugue.setText(aux.getNombresConyuge());
+                jcEstadoCivil1.setSelectedItem(aux.getEstadoCivil());
+            }
+        } else {
+            if (jtxtNombreConyugue.getText().trim().isEmpty() || socio.getNombresConyuge().isEmpty()) {
+                Herramientas.MensajeAdv(IdiomaESP.mErEditarEstadoCivil);
+                jcEstadoCivil1.setSelectedItem(socio.getEstadoCivil());
+            } else {
+                socio.setEstadoCivil(jcEstadoCivil1.getSelectedItem().toString());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    Socio aux = hSocio.obtenerSocio(socio.getId());
+                    jcEstadoCivil1.setSelectedItem(aux.getEstadoCivil());
+                }
+            }
+        }
+    }
+
+    public void actualizarConyugue() {
+        if (!jtxtNombreConyugue.getText().equals(socio.getNombresConyuge())) {
+            socio.setNombresConyuge(jtxtNombreConyugue.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtNombreConyugue.setText(hSocio.obtenerSocio(socio.getId()).getNombresConyuge());
+            }
+        }
+    }
+
     public void pasarDatos() {
         jtxtApMat.setText(socio.getApellidoMaterno());
         jtxtApPat.setText(socio.getApellidoPaterno());
@@ -213,6 +270,9 @@ public class jdEditarSocio extends javax.swing.JDialog {
         jdFechaGraduacion.setText(sf.format(socio.getFehaGrad()));
         jdFechaNac.setText(sf.format(socio.getFechaNacimiento()));
         jdFechaRural.setText(sf.format(socio.getFechaRural()));
+        imagen = socio.getFotoAsociado();
+        jlbImagen.setIcon(socio.getFotoAsociado() != null ? new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)) : new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
+        
     }
 
     /**
@@ -463,8 +523,19 @@ public class jdEditarSocio extends javax.swing.JDialog {
     jLabel12.setText(Herramientas.obligatorio(IdiomaESP.lbSangre));
 
     jcbGrupoSanguineo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"A+","A-","B+","B-","AB+","AB-","O+","O-"}));
+    jcbGrupoSanguineo.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jcbGrupoSanguineoActionPerformed(evt);
+        }
+    });
 
     jLabel13.setText(IdiomaESP.lbNombreConyuge);
+
+    jtxtNombreConyugue.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtNombreConyugueActionPerformed(evt);
+        }
+    });
 
     jLabel35.setText(Herramientas.obligatorio(IdiomaESP.lbEstadoCiv));
 
@@ -962,12 +1033,20 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String url = "";
+
         JFileChooser jfc = new JFileChooser();
         if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
                 imagen = Herramientas.toByte(jfc.getSelectedFile());
-                jlbImagen.setIcon(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)));
+                socio.setFotoAsociado(imagen);
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                    jlbImagen.setIcon(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)));
+                } else {
+                    socio = hSocio.obtenerSocio(socio.getId());
+                    imagen = null;
+                    jlbImagen.setIcon(socio.getFotoAsociado() != null ? new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)) : new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
+                }
             } catch (IOException ex) {
                 Logger.getLogger(jdEditarSocio.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -978,12 +1057,18 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         pasarDatos();
         imagen = null;
-        jlbImagen.setIcon(new Herramientas().getIcono("/Recursos/User.png", dImagen.width, dImagen.height));
+        socio.setFotoAsociado(imagen);
+        if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+            Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+        }
+        jlbImagen.setIcon(socio.getFotoAsociado() != null ? new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)) : new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jcEstadoCivil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcEstadoCivil1ActionPerformed
-
         jLabel13.setText(jcEstadoCivil1.getSelectedIndex() == 2 ? Herramientas.obligatorio(IdiomaESP.lbNombreConyuge) : IdiomaESP.lbNombreConyuge);
+        actualizarEstadoCivil();
     }//GEN-LAST:event_jcEstadoCivil1ActionPerformed
 
     private void jtxtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTituloActionPerformed
@@ -1021,14 +1106,22 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     }//GEN-LAST:event_jdFechaNacOnSelectionChange
 
     private void jtxtProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtProvinciaActionPerformed
-actualizarProvincia();
+        actualizarProvincia();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtProvinciaActionPerformed
 
     private void jtxtCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCiudadActionPerformed
-actualizarCiudad();
+        actualizarCiudad();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtCiudadActionPerformed
+
+    private void jcbGrupoSanguineoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGrupoSanguineoActionPerformed
+        actualizarGrupoSanguine();
+    }//GEN-LAST:event_jcbGrupoSanguineoActionPerformed
+
+    private void jtxtNombreConyugueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNombreConyugueActionPerformed
+        actualizarConyugue();
+    }//GEN-LAST:event_jtxtNombreConyugueActionPerformed
 
     /**
      * @param args the command line arguments
