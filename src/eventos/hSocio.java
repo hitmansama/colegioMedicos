@@ -400,6 +400,16 @@ public class hSocio {
         HibernateUtil.cerrarSesion(sf);
         return l;
     }
+    public static List<Socio> obtenerSociosFiltro(String _filtro) {
+        SessionFactory sf = HibernateUtil.abrirConexion();
+        List<Socio> l = null;
+        Session session = sf.openSession();
+        Query hq = session.createQuery("from Socio where concat(codigo,' ',cedula,' ',nombres,' ',apellidoPaterno,' ',apellidoMaterno) like :_filtro");
+        hq.setParameter("_filtro","%"+_filtro+"%");
+        l = hq.list();
+        HibernateUtil.cerrarSesion(sf);
+        return l;
+    }
     
     public static boolean codigoDublicado(String _codigo) {
         SessionFactory sf = HibernateUtil.abrirConexion();

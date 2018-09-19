@@ -582,6 +582,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtUniversidadGraduado">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtUniversidadGraduadoActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdunigrad = new RestrictedTextField(jtxtUniversidadGraduado);&#xa;rdunigrad.setAcceptSpace(true);&#xa;rdunigrad.setOnlyText(true);&#xa;rdunigrad.setLimit(150);"/>
           </AuxValues>
@@ -594,6 +597,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtInscripcionSanitaria">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtInscripcionSanitariaActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdInsSan = new RestrictedTextField(jtxtInscripcionSanitaria);&#xa;rdInsSan.setLimit(20);"/>
           </AuxValues>
@@ -606,8 +612,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtLibro">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtLibroActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdLibro = new RestrictedTextField(jtxtLibro);&#xa;rdLibro.setLimit(45);&#xa;rdLibro.setOnlyAlphaNumeric(true);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdLibro = new RestrictedTextField(jtxtLibro);&#xa;rdLibro.setLimit(45);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel16">
@@ -618,8 +627,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtFolio">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtFolioActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdFolio = new RestrictedTextField(jtxtFolio);&#xa;rdFolio.setLimit(45);&#xa;rdFolio.setOnlyAlphaNumeric(true);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdFolio = new RestrictedTextField(jtxtFolio);&#xa;rdFolio.setLimit(45);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel18">
@@ -630,6 +642,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtLugarGraduacion">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtLugarGraduacionActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdLugarGrad = new RestrictedTextField(jtxtLugarGraduacion);&#xa;rdLugarGrad.setOnlyText(true);&#xa;rdLugarGrad.setLimit(150);"/>
           </AuxValues>
@@ -647,6 +662,9 @@
               <SerializedValue value="-84,-19,0,5,126,114,0,45,100,97,116,101,99,104,111,111,115,101,114,46,109,111,100,101,108,46,109,117,108,116,105,112,108,101,46,77,117,108,116,121,77,111,100,101,108,66,101,104,97,118,105,111,114,0,0,0,0,0,0,0,0,18,0,0,120,114,0,14,106,97,118,97,46,108,97,110,103,46,69,110,117,109,0,0,0,0,0,0,0,0,18,0,0,120,112,116,0,13,83,69,76,69,67,84,95,83,73,78,71,76,69"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="onSelectionChange" listener="datechooser.events.SelectionChangedListener" parameters="datechooser.events.SelectionChangedEvent" handler="jdFechaGraduacionOnSelectionChange"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jdFechaGraduacion.setText(&quot;&quot;);"/>
           </AuxValues>
@@ -659,6 +677,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtEspacialidad">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtEspacialidadActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdEspecialidad = new RestrictedTextField(jtxtEspacialidad);&#xa;rdEspecialidad.setLimit(100);&#xa;rdEspecialidad.setOnlyText(true);&#xa;rdEspecialidad.setAcceptSpace(true);"/>
           </AuxValues>
@@ -671,6 +692,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtUniversidadEspecialidad">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtUniversidadEspecialidadActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdUEspe = new RestrictedTextField(jtxtUniversidadEspecialidad);&#xa;rdUEspe.setLimit(100);&#xa;rdUEspe.setAcceptSpace(true);&#xa;rdUEspe.setOnlyText(true);"/>
           </AuxValues>
@@ -688,6 +712,9 @@
               <SerializedValue value="-84,-19,0,5,126,114,0,45,100,97,116,101,99,104,111,111,115,101,114,46,109,111,100,101,108,46,109,117,108,116,105,112,108,101,46,77,117,108,116,121,77,111,100,101,108,66,101,104,97,118,105,111,114,0,0,0,0,0,0,0,0,18,0,0,120,114,0,14,106,97,118,97,46,108,97,110,103,46,69,110,117,109,0,0,0,0,0,0,0,0,18,0,0,120,112,116,0,13,83,69,76,69,67,84,95,83,73,78,71,76,69"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="onSelectionChange" listener="datechooser.events.SelectionChangedListener" parameters="datechooser.events.SelectionChangedEvent" handler="jdFechaEspecialidadOnSelectionChange"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jdFechaEspecialidad.setText(&quot;&quot;);"/>
           </AuxValues>
@@ -721,6 +748,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtRural">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtRuralActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdRural = new RestrictedTextField(jtxtRural);&#xa;rdRural.setLimit(100);&#xa;rdRural.setAcceptSpace(true);&#xa;rdRural.setOnlyText(true);"/>
           </AuxValues>
@@ -731,6 +761,9 @@
               <SerializedValue value="-84,-19,0,5,126,114,0,45,100,97,116,101,99,104,111,111,115,101,114,46,109,111,100,101,108,46,109,117,108,116,105,112,108,101,46,77,117,108,116,121,77,111,100,101,108,66,101,104,97,118,105,111,114,0,0,0,0,0,0,0,0,18,0,0,120,114,0,14,106,97,118,97,46,108,97,110,103,46,69,110,117,109,0,0,0,0,0,0,0,0,18,0,0,120,112,116,0,13,83,69,76,69,67,84,95,83,73,78,71,76,69"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="onSelectionChange" listener="datechooser.events.SelectionChangedListener" parameters="datechooser.events.SelectionChangedEvent" handler="jdFechaRuralOnSelectionChange"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jdFechaRural.setText(&quot;&quot;);"/>
           </AuxValues>
@@ -867,6 +900,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtResidencia">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtResidenciaActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdResidencia = new RestrictedTextField(jtxtResidencia);&#xa;rdResidencia.setLimit(45);&#xa;rdResidencia.setOnlyText(true);"/>
           </AuxValues>
@@ -879,8 +915,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtDireccionResidencia">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtDireccionResidenciaActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdDirResidencia = new RestrictedTextField(jtxtDireccionResidencia);&#xa;rdDirResidencia.setLimit(100);&#xa;rdDirResidencia.setAcceptSpace(true);&#xa;rdDirResidencia.setOnlyAlphaNumeric(true);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdDirResidencia = new RestrictedTextField(jtxtDireccionResidencia);&#xa;rdDirResidencia.setLimit(100);&#xa;rdDirResidencia.setAcceptSpace(true);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel29">
@@ -891,6 +930,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtTelefonoResidencia">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtTelefonoResidenciaActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="RestrictedTextField rdtelres = new RestrictedTextField(jtxtTelefonoResidencia);&#xa;rdtelres.setLimit(15);&#xa;rdtelres.setOnlyNums(true);"/>
           </AuxValues>
@@ -903,8 +945,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtDireccionConsultorio">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtDireccionConsultorioActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdDirCon = new RestrictedTextField(jtxtDireccionConsultorio);&#xa;rdDirCon.setLimit(120);&#xa;rdDirCon.setAcceptSpace(true);&#xa;rdDirCon.setOnlyAlphaNumeric(true);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdDirCon = new RestrictedTextField(jtxtDireccionConsultorio);&#xa;rdDirCon.setLimit(120);&#xa;rdDirCon.setAcceptSpace(true);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel31">
@@ -930,6 +975,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtemail">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtemailActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdemail = new RestrictedTextField(jtxtemail);&#xa;rdemail.setLimit(100);"/>
           </AuxValues>
@@ -942,6 +990,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtCelular">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtCelularActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="RestrictedTextField rdCelular = new RestrictedTextField(jtxtCelular);&#xa;rdCelular.setLimit(15);&#xa;rdCelular.setOnlyNums(true);"/>
           </AuxValues>
@@ -995,9 +1046,12 @@
         <Component class="javax.swing.JComboBox" name="jcbEstado">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;-&quot;+IdiomaESP.lbOpcSeleccionar+&quot;-&quot;,&#xa;    IdiomaESP.lbOpActivo,IdiomaESP.lbOpInactivo})" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {IdiomaESP.lbOpActivo,IdiomaESP.lbOpInactivo})" type="code"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbEstadoActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>

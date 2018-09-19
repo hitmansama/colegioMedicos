@@ -27,12 +27,13 @@ public class jiSocios extends javax.swing.JInternalFrame {
      */
     public jiSocios() {
         initComponents();
-        cargarTabla();
+        cargarTabla("");
         this.requestFocusInWindow(true);
+        this.setTitle(IdiomaESP.tSocios);
         this.requestFocus();
     }
 
-    public void cargarTabla() {
+    public void cargarTabla(String _filtro) {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Cedula");
         modelo.addColumn("Nombres");
@@ -40,7 +41,7 @@ public class jiSocios extends javax.swing.JInternalFrame {
         modelo.addColumn("Estado");
         modelo.addColumn("OBJETO");
 
-        List<Socio> socios = hSocio.obtenerSocios();
+        List<Socio> socios = hSocio.obtenerSociosFiltro(_filtro);
         if (socios != null) {
             Iterator it = socios.iterator();
             while (it.hasNext()) {
@@ -105,6 +106,11 @@ public class jiSocios extends javax.swing.JInternalFrame {
 
         jTextField1.setToolTipText("Cédula, nombres o apellidos");
         jTextField1.setNextFocusableComponent(jButton1);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField1KeyPressed(evt);
@@ -112,6 +118,11 @@ public class jiSocios extends javax.swing.JInternalFrame {
         });
 
         jButton1.setText(IdiomaESP.btBuscar);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,7 +144,7 @@ public class jiSocios extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setText("jButton3");
+        jButton3.setText(IdiomaESP.tEditarSocio);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -183,7 +194,7 @@ public class jiSocios extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new jdNuevoSocio(null,true).setVisible(true);
-        cargarTabla();
+        cargarTabla(jTextField1.getText().trim());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
@@ -206,6 +217,14 @@ public class jiSocios extends javax.swing.JInternalFrame {
       
           
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cargarTabla(jTextField1.getText());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

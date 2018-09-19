@@ -40,7 +40,7 @@ public class jdEditarSocio extends javax.swing.JDialog {
         super(parent, modal);
         socio = _socio;
         initComponents();
-        this.setTitle(IdiomaESP.tNuevoSocio);
+        this.setTitle(IdiomaESP.tEditarSocio);
         Herramientas.VentanaCentroWindows(this);
         this.requestFocusInWindow(true);
         this.requestFocusInWindow();
@@ -236,6 +236,311 @@ public class jdEditarSocio extends javax.swing.JDialog {
         }
     }
 
+    public void actualizarFoto() {
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            try {
+                imagen = Herramientas.toByte(jfc.getSelectedFile());
+                socio.setFotoAsociado(imagen);
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                    jlbImagen.setIcon(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)));
+                } else {
+                    socio = hSocio.obtenerSocio(socio.getId());
+                    imagen = null;
+                    jlbImagen.setIcon(socio.getFotoAsociado() != null ? new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)) : new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(jdEditarSocio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void actualizarCancelarFoto() {
+        pasarDatos();
+        imagen = null;
+        socio.setFotoAsociado(imagen);
+        if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+            Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+        }
+        jlbImagen.setIcon(socio.getFotoAsociado() != null ? new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)) : new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
+    }
+
+    public void actualizarUniGrad() {
+        if (!jtxtUniversidadGraduado.getText().trim().isEmpty()) {
+            if (!jtxtUniversidadGraduado.getText().equals(socio.getGraduacionUni())) {
+                socio.setGraduacionUni(jtxtUniversidadGraduado.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtUniversidadGraduado.setText(hSocio.obtenerSocio(socio.getId()).getGraduacionUni());
+                }
+            }
+        } else {
+            jtxtUniversidadGraduado.setText(socio.getGraduacionUni());
+        }
+    }
+
+    public void actualizarTituloDe() {
+        if (!jtxtTitulo.getText().trim().isEmpty()) {
+            if (!jtxtTitulo.getText().equals(socio.getTituloDe())) {
+                socio.setTituloDe(jtxtTitulo.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtTitulo.setText(hSocio.obtenerSocio(socio.getId()).getTituloDe());
+                }
+            }
+        } else {
+            jtxtTitulo.setText(socio.getTituloDe());
+        }
+    }
+
+    public void actualizarInscripcionSanitaria() {
+        if (!jtxtInscripcionSanitaria.getText().trim().isEmpty()) {
+            if (!jtxtInscripcionSanitaria.getText().equals(socio.getInscripcionSanitaria())) {
+                socio.setInscripcionSanitaria(jtxtInscripcionSanitaria.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtInscripcionSanitaria.setText(hSocio.obtenerSocio(socio.getId()).getInscripcionSanitaria());
+                }
+            }
+        } else {
+            jtxtInscripcionSanitaria.setText(socio.getInscripcionSanitaria());
+        }
+    }
+
+    public void actualizarLibro() {
+        if (!jtxtLibro.getText().equals(socio.getLibro())) {
+            socio.setLibro(jtxtLibro.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtLibro.setText(hSocio.obtenerSocio(socio.getId()).getLibro());
+            }
+        }
+    }
+
+    public void actualizarFolio() {
+        if (!jtxtFolio.getText().equals(socio.getFolio())) {
+            socio.setFolio(jtxtFolio.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtFolio.setText(hSocio.obtenerSocio(socio.getId()).getFolio());
+            }
+        }
+    }
+
+    public void actualizarLugarGrad() {
+        if (!jtxtLugarGraduacion.getText().trim().isEmpty()) {
+            if (!jtxtLugarGraduacion.getText().equals(socio.getLugarGrad())) {
+                socio.setLugarGrad(jtxtLugarGraduacion.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtLugarGraduacion.setText(hSocio.obtenerSocio(socio.getId()).getLugarGrad());
+                }
+            }
+        } else {
+            jtxtLugarGraduacion.setText(socio.getLugarGrad());
+        }
+    }
+
+    public void actualizarFechaGraduacion() {
+        SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yy");
+        if (jdFechaGraduacion.getSelectedDate() != null) {
+            if (!jdFechaGraduacion.getSelectedDate().getTime().equals(socio.getFehaGrad())) {
+                socio.setFehaGrad(jdFechaGraduacion.getSelectedDate().getTime());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    jdFechaGraduacion.setText(sp.format(socio.getFehaGrad()));
+                    Herramientas.MensajeAdv(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jdFechaGraduacion.setText(sp.format(hSocio.obtenerSocio(socio.getId()).getFehaGrad()));
+                }
+            }
+        } else {
+            jdFechaGraduacion.setText(sp.format(socio.getFehaGrad()));
+        }
+    }
+
+    public void actualizarRural() {
+        if (!jtxtRural.getText().trim().isEmpty()) {
+            if (!jtxtRural.getText().equals(socio.getMedicaturaRural())) {
+                socio.setMedicaturaRural(jtxtRural.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtRural.setText(hSocio.obtenerSocio(socio.getId()).getMedicaturaRural());
+                }
+            }
+        } else {
+            jtxtRural.setText(socio.getMedicaturaRural());
+        }
+    }
+
+    public void actualizarEspecialidUni() {
+        if (!jtxtUniversidadEspecialidad.getText().equals(socio.getUniversidadEsp())) {
+            socio.setUniversidadEsp(jtxtUniversidadEspecialidad.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtUniversidadEspecialidad.setText(hSocio.obtenerSocio(socio.getId()).getUniversidadEsp());
+            }
+        }
+    }
+
+    public void actualizarEspecialidTitulo() {
+        if (!jtxtEspacialidad.getText().equals(socio.getEspecialidad())) {
+            socio.setEspecialidad(jtxtEspacialidad.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtEspacialidad.setText(hSocio.obtenerSocio(socio.getId()).getEspecialidad());
+            }
+        }
+    }
+
+    public void actualizarFechaRural() {
+        SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yy");
+        if (jdFechaRural.getSelectedDate() != null) {
+            if (!jdFechaRural.getSelectedDate().getTime().equals(socio.getFechaRural())) {
+                socio.setFechaRural(jdFechaRural.getSelectedDate().getTime());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    jdFechaRural.setText(sp.format(socio.getFehaGrad()));
+                    Herramientas.MensajeAdv(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jdFechaRural.setText(sp.format(hSocio.obtenerSocio(socio.getId()).getFehaGrad()));
+                }
+            }
+        } else {
+            jdFechaRural.setText(sp.format(socio.getFechaRural()));
+        }
+    }
+
+    public void actualizarResidencia() {
+        if (!jtxtResidencia.getText().trim().isEmpty()) {
+            if (!jtxtResidencia.getText().equals(socio.getLugarResidencia())) {
+                socio.setLugarResidencia(jtxtResidencia.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtResidencia.setText(hSocio.obtenerSocio(socio.getId()).getLugarResidencia());
+                }
+            }
+        } else {
+            jtxtResidencia.setText(socio.getLugarResidencia());
+        }
+    }
+
+    public void actualizarResidenciaDir() {
+        if (!jtxtDireccionResidencia.getText().equals(socio.getDireccionResidencia())) {
+            socio.setDireccionResidencia(jtxtDireccionResidencia.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtDireccionResidencia.setText(hSocio.obtenerSocio(socio.getId()).getDireccionResidencia());
+            }
+        }
+    }
+
+    public void actualizarTelefonoResidencia() {
+        if (!jtxtTelefonoResidencia.getText().trim().isEmpty()) {
+            if (!jtxtTelefonoResidencia.getText().equals(socio.getTelfResidencia())) {
+                socio.setTelfResidencia(jtxtTelefonoResidencia.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtTelefonoResidencia.setText(hSocio.obtenerSocio(socio.getId()).getTelfResidencia());
+                }
+            }
+        } else {
+            jtxtTelefonoResidencia.setText(socio.getTelfResidencia());
+        }
+    }
+
+    public void actualizarConsultorio() {
+        if (!jtxtDireccionConsultorio.getText().equals(socio.getDireccionConsultorio())) {
+            socio.setDireccionConsultorio(jtxtDireccionConsultorio.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtDireccionConsultorio.setText(hSocio.obtenerSocio(socio.getId()).getDireccionConsultorio());
+            }
+        }
+    }
+
+    public void actualizarTelefonoConsultorio() {
+        if (!jtxtTelefonoConsultorio.getText().equals(socio.getTelfConsultorio())) {
+            socio.setTelfConsultorio(jtxtTelefonoConsultorio.getText());
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jtxtTelefonoConsultorio.setText(hSocio.obtenerSocio(socio.getId()).getTelfConsultorio());
+            }
+        }
+    }
+
+    public void actualizarCelular() {
+        if (!jtxtCelular.getText().trim().isEmpty()) {
+            if (!jtxtCelular.getText().equals(socio.getTelfCelular())) {
+                socio.setTelfCelular(jtxtCelular.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtCelular.setText(hSocio.obtenerSocio(socio.getId()).getTelfCelular());
+                }
+            }
+        } else {
+            jtxtCelular.setText(socio.getTelfCelular());
+        }
+    }
+
+    public void actualizarEmail() {
+        if (!jtxtemail.getText().trim().isEmpty()) {
+            if (!jtxtemail.getText().equals(socio.getEmail())) {
+                socio.setEmail(jtxtemail.getText());
+                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+                } else {
+                    Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                    jtxtemail.setText(hSocio.obtenerSocio(socio.getId()).getTelfCelular());
+                }
+            }
+        } else {
+            jtxtemail.setText(socio.getEmail());
+        }
+    }
+    public void actualizarEstadoSocio() {
+        if (!socio.getEstadoSocio().equals(jcbEstado.getSelectedItem().toString().equals(IdiomaESP.lbOpActivo)?"a":"i")) {
+            socio.setEstadoSocio(jcbEstado.getSelectedItem().equals(IdiomaESP.lbOpActivo)?"a":"i");
+            if (hSocio.guardarSocioEditar(socio, socio.getId())) {
+                Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
+            } else {
+                Herramientas.MensajeErr(IdiomaESP.mErEditarSocio, IdiomaESP.tGuardarSocio);
+                jcbEstado.setSelectedItem(hSocio.obtenerSocio(socio.getId()).getEstadoSocio().equals("a")?IdiomaESP.lbOpActivo:IdiomaESP.lbOpInactivo);
+            }
+        }
+    }
+
     public void pasarDatos() {
         jtxtApMat.setText(socio.getApellidoMaterno());
         jtxtApPat.setText(socio.getApellidoPaterno());
@@ -263,7 +568,7 @@ public class jdEditarSocio extends javax.swing.JDialog {
         jtxtUniversidadGraduado.setText(socio.getGraduacionUni());
         jtxtemail.setText(socio.getEmail());
         jcEstadoCivil1.setSelectedItem(socio.getEstadoCivil());
-        jcbEstado.setSelectedIndex(socio.getEstadoSocio().equals("a") ? 1 : 2);
+        jcbEstado.setSelectedIndex(socio.getEstadoSocio().equals("a") ? 0 : 1);
         jcbGrupoSanguineo.setSelectedItem(socio.getGrupoSanguineo());
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yy");
         jdFechaEspecialidad.setText(socio.getFechaEsp() != null ? sf.format(socio.getFechaEsp()) : "");
@@ -272,7 +577,6 @@ public class jdEditarSocio extends javax.swing.JDialog {
         jdFechaRural.setText(sf.format(socio.getFechaRural()));
         imagen = socio.getFotoAsociado();
         jlbImagen.setIcon(socio.getFotoAsociado() != null ? new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)) : new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
-        
     }
 
     /**
@@ -665,34 +969,62 @@ public class jdEditarSocio extends javax.swing.JDialog {
     rdunigrad.setAcceptSpace(true);
     rdunigrad.setOnlyText(true);
     rdunigrad.setLimit(150);
+    jtxtUniversidadGraduado.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtUniversidadGraduadoActionPerformed(evt);
+        }
+    });
 
     jLabel14.setText(Herramientas.obligatorio(IdiomaESP.lbInsSanitaria));
 
     RestrictedTextField rdInsSan = new RestrictedTextField(jtxtInscripcionSanitaria);
     rdInsSan.setLimit(20);
+    jtxtInscripcionSanitaria.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtInscripcionSanitariaActionPerformed(evt);
+        }
+    });
 
     jLabel15.setText(IdiomaESP.lbLibro);
 
     RestrictedTextField rdLibro = new RestrictedTextField(jtxtLibro);
     rdLibro.setLimit(45);
-    rdLibro.setOnlyAlphaNumeric(true);
+    jtxtLibro.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtLibroActionPerformed(evt);
+        }
+    });
 
     jLabel16.setText(IdiomaESP.lbFolio);
 
     RestrictedTextField rdFolio = new RestrictedTextField(jtxtFolio);
     rdFolio.setLimit(45);
-    rdFolio.setOnlyAlphaNumeric(true);
+    jtxtFolio.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtFolioActionPerformed(evt);
+        }
+    });
 
     jLabel18.setText(Herramientas.obligatorio(IdiomaESP.lbLugarGrad));
 
     RestrictedTextField rdLugarGrad = new RestrictedTextField(jtxtLugarGraduacion);
     rdLugarGrad.setOnlyText(true);
     rdLugarGrad.setLimit(150);
+    jtxtLugarGraduacion.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtLugarGraduacionActionPerformed(evt);
+        }
+    });
 
     jLabel19.setText(Herramientas.obligatorio(IdiomaESP.lbFechaGrad));
 
     jdFechaGraduacion.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
     jdFechaGraduacion.setText("");
+    jdFechaGraduacion.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
+        public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
+            jdFechaGraduacionOnSelectionChange(evt);
+        }
+    });
 
     jLabel20.setText(IdiomaESP.lbEspcialidad);
 
@@ -700,6 +1032,11 @@ public class jdEditarSocio extends javax.swing.JDialog {
     rdEspecialidad.setLimit(100);
     rdEspecialidad.setOnlyText(true);
     rdEspecialidad.setAcceptSpace(true);
+    jtxtEspacialidad.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtEspacialidadActionPerformed(evt);
+        }
+    });
 
     jLabel21.setText(IdiomaESP.lbUniversidad);
 
@@ -707,11 +1044,21 @@ public class jdEditarSocio extends javax.swing.JDialog {
     rdUEspe.setLimit(100);
     rdUEspe.setAcceptSpace(true);
     rdUEspe.setOnlyText(true);
+    jtxtUniversidadEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtUniversidadEspecialidadActionPerformed(evt);
+        }
+    });
 
     jLabel22.setText(IdiomaESP.lbFechaGrad);
 
     jdFechaEspecialidad.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
     jdFechaEspecialidad.setText("");
+    jdFechaEspecialidad.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
+        public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
+            jdFechaEspecialidadOnSelectionChange(evt);
+        }
+    });
 
     jLabel17.setText(IdiomaESP.tGraduacion);
 
@@ -725,9 +1072,19 @@ public class jdEditarSocio extends javax.swing.JDialog {
     rdRural.setLimit(100);
     rdRural.setAcceptSpace(true);
     rdRural.setOnlyText(true);
+    jtxtRural.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtRuralActionPerformed(evt);
+        }
+    });
 
     jdFechaRural.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
     jdFechaRural.setText("");
+    jdFechaRural.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
+        public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
+            jdFechaRuralOnSelectionChange(evt);
+        }
+    });
 
     jLabel26.setText(IdiomaESP.tRural);
 
@@ -861,26 +1218,44 @@ public class jdEditarSocio extends javax.swing.JDialog {
     RestrictedTextField rdResidencia = new RestrictedTextField(jtxtResidencia);
     rdResidencia.setLimit(45);
     rdResidencia.setOnlyText(true);
+    jtxtResidencia.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtResidenciaActionPerformed(evt);
+        }
+    });
 
     jLabel28.setText(IdiomaESP.lbDireccion);
 
     RestrictedTextField rdDirResidencia = new RestrictedTextField(jtxtDireccionResidencia);
     rdDirResidencia.setLimit(100);
     rdDirResidencia.setAcceptSpace(true);
-    rdDirResidencia.setOnlyAlphaNumeric(true);
+    jtxtDireccionResidencia.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtDireccionResidenciaActionPerformed(evt);
+        }
+    });
 
     jLabel29.setText(Herramientas.obligatorio(IdiomaESP.lbTelfono));
 
     RestrictedTextField rdtelres = new RestrictedTextField(jtxtTelefonoResidencia);
     rdtelres.setLimit(15);
     rdtelres.setOnlyNums(true);
+    jtxtTelefonoResidencia.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtTelefonoResidenciaActionPerformed(evt);
+        }
+    });
 
     jLabel30.setText(IdiomaESP.lbDireccionConsul);
 
     RestrictedTextField rdDirCon = new RestrictedTextField(jtxtDireccionConsultorio);
     rdDirCon.setLimit(120);
     rdDirCon.setAcceptSpace(true);
-    rdDirCon.setOnlyAlphaNumeric(true);
+    jtxtDireccionConsultorio.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtDireccionConsultorioActionPerformed(evt);
+        }
+    });
 
     jLabel31.setText(IdiomaESP.lbTelfono);
 
@@ -897,12 +1272,22 @@ public class jdEditarSocio extends javax.swing.JDialog {
 
     RestrictedTextField rdemail = new RestrictedTextField(jtxtemail);
     rdemail.setLimit(100);
+    jtxtemail.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtemailActionPerformed(evt);
+        }
+    });
 
     jLabel33.setText(Herramientas.obligatorio(IdiomaESP.lbCelular));
 
     RestrictedTextField rdCelular = new RestrictedTextField(jtxtCelular);
     rdCelular.setLimit(15);
     rdCelular.setOnlyNums(true);
+    jtxtCelular.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jtxtCelularActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
     jPanel4.setLayout(jPanel4Layout);
@@ -968,19 +1353,23 @@ public class jdEditarSocio extends javax.swing.JDialog {
 
     jLabel1.setText(Herramientas.obligatorio(IdiomaESP.tEstadoSocio));
 
-    jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-"+IdiomaESP.lbOpcSeleccionar+"-",
-        IdiomaESP.lbOpActivo,IdiomaESP.lbOpInactivo}));
+    jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {IdiomaESP.lbOpActivo,IdiomaESP.lbOpInactivo}));
+    jcbEstado.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jcbEstadoActionPerformed(evt);
+        }
+    });
 
-javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-jPanel5.setLayout(jPanel5Layout);
-jPanel5Layout.setHorizontalGroup(
-jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-.addGroup(jPanel5Layout.createSequentialGroup()
-    .addContainerGap()
-    .addComponent(jLabel1)
-    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-    .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-    .addContainerGap())
+    javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+    jPanel5.setLayout(jPanel5Layout);
+    jPanel5Layout.setHorizontalGroup(
+        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel5Layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap())
     );
     jPanel5Layout.setVerticalGroup(
         jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1033,37 +1422,11 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        JFileChooser jfc = new JFileChooser();
-        if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            try {
-                imagen = Herramientas.toByte(jfc.getSelectedFile());
-                socio.setFotoAsociado(imagen);
-                if (hSocio.guardarSocioEditar(socio, socio.getId())) {
-                    Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
-                    jlbImagen.setIcon(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)));
-                } else {
-                    socio = hSocio.obtenerSocio(socio.getId());
-                    imagen = null;
-                    jlbImagen.setIcon(socio.getFotoAsociado() != null ? new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)) : new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(jdEditarSocio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
+        actualizarFoto();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        pasarDatos();
-        imagen = null;
-        socio.setFotoAsociado(imagen);
-        if (hSocio.guardarSocioEditar(socio, socio.getId())) {
-            Herramientas.MensajeInfo(IdiomaESP.mEditarSocio, IdiomaESP.tGuardarSocio);
-        }
-        jlbImagen.setIcon(socio.getFotoAsociado() != null ? new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(dImagen.width, dImagen.height, Image.SCALE_AREA_AVERAGING)) : new Herramientas().getIcono("/Recursos/User.png", jlbImagen.getWidth(), jlbImagen.getHeight()));
-
-
+        actualizarCancelarFoto();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jcEstadoCivil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcEstadoCivil1ActionPerformed
@@ -1072,11 +1435,11 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     }//GEN-LAST:event_jcEstadoCivil1ActionPerformed
 
     private void jtxtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTituloActionPerformed
-        // TODO add your handling code here:
+        actualizarTituloDe();        // TODO add your handling code here:
     }//GEN-LAST:event_jtxtTituloActionPerformed
 
     private void jtxtTelefonoConsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTelefonoConsultorioActionPerformed
-        // TODO add your handling code here:
+       actualizarTelefonoConsultorio();
     }//GEN-LAST:event_jtxtTelefonoConsultorioActionPerformed
 
     private void jtxtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCodigoActionPerformed
@@ -1122,6 +1485,78 @@ jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     private void jtxtNombreConyugueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNombreConyugueActionPerformed
         actualizarConyugue();
     }//GEN-LAST:event_jtxtNombreConyugueActionPerformed
+
+    private void jtxtUniversidadGraduadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtUniversidadGraduadoActionPerformed
+        actualizarUniGrad();
+    }//GEN-LAST:event_jtxtUniversidadGraduadoActionPerformed
+
+    private void jtxtInscripcionSanitariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtInscripcionSanitariaActionPerformed
+        actualizarInscripcionSanitaria();
+    }//GEN-LAST:event_jtxtInscripcionSanitariaActionPerformed
+
+    private void jtxtLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtLibroActionPerformed
+        actualizarLibro();
+    }//GEN-LAST:event_jtxtLibroActionPerformed
+
+    private void jtxtFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtFolioActionPerformed
+        actualizarFolio();
+    }//GEN-LAST:event_jtxtFolioActionPerformed
+
+    private void jtxtLugarGraduacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtLugarGraduacionActionPerformed
+        actualizarLugarGrad();
+    }//GEN-LAST:event_jtxtLugarGraduacionActionPerformed
+
+    private void jtxtRuralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtRuralActionPerformed
+        actualizarRural();
+    }//GEN-LAST:event_jtxtRuralActionPerformed
+
+    private void jdFechaEspecialidadOnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_jdFechaEspecialidadOnSelectionChange
+
+    }//GEN-LAST:event_jdFechaEspecialidadOnSelectionChange
+
+    private void jtxtEspacialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEspacialidadActionPerformed
+        actualizarEspecialidTitulo();
+    }//GEN-LAST:event_jtxtEspacialidadActionPerformed
+
+    private void jtxtUniversidadEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtUniversidadEspecialidadActionPerformed
+        actualizarEspecialidUni();
+    }//GEN-LAST:event_jtxtUniversidadEspecialidadActionPerformed
+
+    private void jdFechaGraduacionOnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_jdFechaGraduacionOnSelectionChange
+        actualizarFechaGraduacion();
+    }//GEN-LAST:event_jdFechaGraduacionOnSelectionChange
+
+    private void jdFechaRuralOnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_jdFechaRuralOnSelectionChange
+        actualizarFechaRural();
+    }//GEN-LAST:event_jdFechaRuralOnSelectionChange
+
+    private void jtxtResidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtResidenciaActionPerformed
+       actualizarResidencia();
+    }//GEN-LAST:event_jtxtResidenciaActionPerformed
+
+    private void jtxtDireccionResidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDireccionResidenciaActionPerformed
+        actualizarResidenciaDir();
+    }//GEN-LAST:event_jtxtDireccionResidenciaActionPerformed
+
+    private void jtxtTelefonoResidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTelefonoResidenciaActionPerformed
+       actualizarTelefonoResidencia();
+    }//GEN-LAST:event_jtxtTelefonoResidenciaActionPerformed
+
+    private void jtxtDireccionConsultorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDireccionConsultorioActionPerformed
+       actualizarConsultorio();
+    }//GEN-LAST:event_jtxtDireccionConsultorioActionPerformed
+
+    private void jtxtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtemailActionPerformed
+        actualizarEmail();
+    }//GEN-LAST:event_jtxtemailActionPerformed
+
+    private void jtxtCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCelularActionPerformed
+       actualizarCelular();
+    }//GEN-LAST:event_jtxtCelularActionPerformed
+
+    private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
+       actualizarEstadoSocio();
+    }//GEN-LAST:event_jcbEstadoActionPerformed
 
     /**
      * @param args the command line arguments
